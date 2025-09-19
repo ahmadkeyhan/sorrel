@@ -6,6 +6,17 @@ import { MenuItem } from "../../models/MenuItem";
 import mongoose from "mongoose";
 
 // Category CRUD operations
+export async function getCategories() {
+  try {
+    await connectToDatabase();
+    const categories = await Category.find().sort({ group: 1, order: 1 });
+    return JSON.parse(JSON.stringify(categories));
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw new Error("Failed to fetch categories");
+  }
+}
+
 export async function getCategoriesByGroup(group : "صبحانه" | "قلیان" | "بار گرم" | "بار سرد" | "کیک و دسر" | "غذاها") {
   try {
     await connectToDatabase();
