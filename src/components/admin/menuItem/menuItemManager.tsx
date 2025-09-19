@@ -58,7 +58,6 @@ import Image from "next/image";
 import SortableMenuItem from "./sortableMenuItem";
 import { deleteImage } from "@/lib/imageUtils";
 import AvailabilityToggle from "./availabilityToggle";
-import IconSelector from "../iconSelector";
 import * as LucideIcons from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
@@ -615,12 +614,6 @@ export default function MenuItemManager({ isAdmin = true }) {
                 required
               />
             </div>
-            <div>
-              <IconSelector
-                value={newItem.iconName}
-                onChange={(iconName) => setNewItem({ ...newItem, iconName })}
-              />
-            </div>
             <div className="sm:col-span-2">
               <Textarea
                 placeholder="توضیحات (اختیاری)"
@@ -865,17 +858,6 @@ export default function MenuItemManager({ isAdmin = true }) {
                                                 })
                                               }
                                               required
-                                            />
-                                          </div>
-                                          <div>
-                                            <IconSelector
-                                              value={editForm.iconName}
-                                              onChange={(iconName) =>
-                                                setEditForm({
-                                                  ...editForm,
-                                                  iconName,
-                                                })
-                                              }
                                             />
                                           </div>
                                           <div className="sm:col-span-2">

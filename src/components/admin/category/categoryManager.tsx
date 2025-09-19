@@ -32,7 +32,6 @@ import {
 } from "@/lib/data/categoryData"
 import { useToast } from "@/components/ui/toastContext"
 import SortableCategoryItem from "./sortableCategoryItem"
-import ColorSelector from "../colorSelector"
 
 interface category {
     id: string, 
@@ -224,12 +223,6 @@ export default function CategoryManager() {
               className="h-10"
             />
           </div>
-          <div>
-            <ColorSelector
-              value={newCategory.bgColor}
-              onChange={(bgColor) => setNewCategory({ ...newCategory, bgColor, textColor: bgColor === "#e1bd8b" ? "#050505" : "#ffffff"})}
-            />
-          </div>
         </div>
         <div className="flex">
           <Button type="submit" className="bg-qqteal hover:bg-amber-600">
@@ -261,12 +254,6 @@ export default function CategoryManager() {
                             value={editForm.description}
                             onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
                             className="h-10"
-                          />
-                        </div>
-                        <div>
-                          <ColorSelector
-                            value={editForm.bgColor}
-                            onChange={(bgColor) => setEditForm({ ...editForm, bgColor, textColor: bgColor === "#e1bd8b" ? "#050505" : "#ffffff"})}
                           />
                         </div>
                       </div>

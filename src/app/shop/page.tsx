@@ -42,7 +42,7 @@ function MenuSkeleton() {
   return (
     <AnimatePresence>
       <motion.div
-        variants={spinnerVariants}
+        // variants={spinnerVariants}
         initial="initial"
         animate="animate"
         className="w-3 h-3 rounded-full"

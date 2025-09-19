@@ -10,8 +10,6 @@ import { User, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import * as LucideIcons from 'lucide-react';
-import PushNotificationToggle from "../pushNotificationToggle";
-import PwaInstallButton from "../pwaInstallationButton";
 
 const navItems = [
   { name: "خانه", href: "/", icon: 'House' },
@@ -73,8 +71,6 @@ export function Navbar() {
               <span className="absolute bottom-0 left-0 w-full h-[2px] bg-qqteal scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out origin-left"></span>
             </Link>
           )})}
-          <PushNotificationToggle />
-          <PwaInstallButton />
           <Link href={'/admin'}>
                 <Button variant="outline" size="sm" className="text-qqdarkbrown hover:bg-qqcream">
                     {session?.user ? session.user.name : "پنل ادمین"}
@@ -183,8 +179,6 @@ export function Navbar() {
               </Link>
             )})}
             <div className="flex items-center gap-2">
-              <PushNotificationToggle />
-              <PwaInstallButton />
             </div>
             <div className="flex gap-2">
               <Link 

@@ -196,7 +196,7 @@ export default function MenuCategories() {
                   <div className="py-12 flex justify-center items-center">
                   <div className="flex space-x-3">
                       <motion.div
-                        variants={spinnerVariants}
+                        // variants={spinnerVariants}
                         initial="initial"
                         animate="animate"
                         className="w-5 h-5 text-amber-500 flex justify-center items-center"
@@ -237,7 +237,7 @@ export default function MenuCategories() {
         <div className="py-12 flex justify-center items-center">
           <div className="flex space-x-3">
             <motion.div
-              variants={spinnerVariants}
+              // variants={spinnerVariants}
               initial="initial"
               animate="animate"
               className="w-5 h-5 text-amber-500 flex justify-center items-center"
