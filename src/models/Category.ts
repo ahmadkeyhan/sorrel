@@ -5,7 +5,7 @@ import mongoose from "mongoose"
 export interface ICategory {
   _id?: mongoose.Types.ObjectId | string
   name: string
-  mainCategory: "صبحانه" | "قلیان" | "بار گرم" | "بار سرد" | "کیک و دسر" | "غذاها"
+  group: "صبحانه" | "قلیان" | "بار گرم" | "بار سرد" | "کیک و دسر" | "غذاها"
   order?: number
   createdAt?: Date
   updatedAt?: Date
@@ -14,7 +14,7 @@ export interface ICategory {
 const categorySchema = new Schema<ICategory>(
   {
     name: { type: String, required: true },
-    mainCategory: {
+    group: {
       type: String,
       enum: ["صبحانه", "قلیان", "بار گرم", "بار سرد", "کیک و دسر", "غذاها"],
       default: "غذاها",
