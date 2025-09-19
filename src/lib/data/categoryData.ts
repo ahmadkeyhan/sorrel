@@ -6,10 +6,10 @@ import { MenuItem } from "../../models/MenuItem";
 import mongoose from "mongoose";
 
 // Category CRUD operations
-export async function getCategories() {
+export async function getCategoriesByGroup(group : "صبحانه" | "قلیان" | "بار گرم" | "بار سرد" | "کیک و دسر" | "غذاها") {
   try {
     await connectToDatabase();
-    const categories = await Category.find().sort({ order: 1, name: 1 });
+    const categories = await Category.find({group}).sort({ order: 1 });
     return JSON.parse(JSON.stringify(categories));
   } catch (error) {
     console.error("Error fetching categories:", error);
@@ -21,7 +21,7 @@ export async function createCategory(categoryData: ICategory) {
   try {
     await connectToDatabase();
     if (categoryData.order === undefined) {
-      const lastCategory = await Category.findOne({})
+      const lastCategory = await Category.findOne({group: categoryData.group})
         .sort({ order: -1 })
         .limit(1);
 
@@ -74,11 +74,10 @@ export async function deleteCategory(id: string) {
         throw new Error("Category not found");
       }
 
-      // Remove this category from all menu items that reference it
-      await MenuItem.updateMany({ categoryIds: id }, { $pull: { categoryIds: id } }).session(session)
+      
 
-      // Delete menu items that have no categories left
-      await MenuItem.deleteMany({ categoryIds: { $size: 0 } }).session(session)
+      // Delete menu items in this category
+      await MenuItem.deleteMany({ categoryId: id }).session(session)
 
       await session.commitTransaction();
       return { success: true };
@@ -118,13 +117,13 @@ export async function getItemsGroupedByCategories() {
   try {
     await connectToDatabase()
     const categories = await Category.find().sort({ order: 1, name: 1 })
-    const items = await MenuItem.find({ available: true }).populate("categoryIds", "name")
+    const items = await MenuItem.find({ available: true }).populate("categoryId", "name")
 
     const grouped: { [categoryId: string]: any[] } = {}
 
     categories.forEach((category) => {
       grouped[category._id.toString()] = items.filter((item) =>
-        item.categoryIds.some((catId: any) => catId._id.toString() === category._id.toString()),
+        item.categoryId.toString() === category._id.toString()
       )
     })
 

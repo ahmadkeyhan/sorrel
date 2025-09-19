@@ -23,7 +23,7 @@ export async function getCategoryItems(categoryId: string) {
     await connectToDatabase();
     // Find items that include this category in their categoryIds array
     const items = await MenuItem.find({
-      categoryIds: categoryId,
+      categoryId,
       available: true,
     }).sort({ order: 1, name: 1 })
     return JSON.parse(JSON.stringify(items));
@@ -38,7 +38,7 @@ export async function getAllCategoryItems(categoryId: string) {
   try {
     await connectToDatabase();
     // Return all items regardless of availability status
-    const items = await MenuItem.find({ categoryIds: categoryId }).sort({ order: 1, name: 1 })
+    const items = await MenuItem.find({ categoryId }).sort({ order: 1 })
     return JSON.parse(JSON.stringify(items));
   } catch (error) {
     console.error("Error fetching all category items:", error);
@@ -49,14 +49,10 @@ export async function getAllCategoryItems(categoryId: string) {
 export async function createMenuItem(itemData: IMenuItem) {
   try {
     await connectToDatabase();
-    // Ensure categoryIds is an array
-    if (itemData.categoryIds && !Array.isArray(itemData.categoryIds)) {
-      itemData.categoryIds = [itemData.categoryIds]
-    }
 
     // If order is not provided, set it to be the last item overall
     if (itemData.order === undefined) {
-      const lastItem = await MenuItem.findOne().sort({ order: -1 }).limit(1)
+      const lastItem = await MenuItem.findOne({categoryId : itemData.categoryId}).sort({ order: -1 }).limit(1)
       itemData.order = lastItem ? (lastItem.order || 0) + 1 : 0
     }
 
@@ -64,7 +60,7 @@ export async function createMenuItem(itemData: IMenuItem) {
     await newItem.save()
 
     // Populate categories before returning
-    await newItem.populate("categoryIds", "name")
+    await newItem.populate("categoryId", "name")
     return JSON.parse(JSON.stringify(newItem));
   } catch (error) {
     console.error("Error creating menu item:", error);
@@ -108,10 +104,7 @@ export async function deleteMenuItem(id: string) {
   }
 }
 
-export async function reorderMenuItems(
-  categoryId: string,
-  orderedIds: string[]
-) {
+export async function reorderMenuItems(categoryId: string, orderedIds: string[]) {
   try {
     await connectToDatabase();
 
