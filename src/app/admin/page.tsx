@@ -80,6 +80,20 @@ export default function AdminPage() {
             )}
           </TabsList>
           <div className="flex-1">
+
+            {isAdmin && (
+              <TabsContent
+                value="categories"
+                className="space-y-6 data-[state=active]:block"
+              >
+                <h1 className="text-xl font-bold text-qqdarkbrown text-center lg:text-end ">
+                  مدیریت دسته‌بندی‌ها
+                </h1>
+                <Suspense fallback={<CategoriesSkeleton />}>
+                  <CategoryManager />
+                </Suspense>
+              </TabsContent>
+            )}
             
             <TabsContent
               value="items"
