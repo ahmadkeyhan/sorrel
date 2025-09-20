@@ -34,7 +34,7 @@ export const readFileAsBase64 = (file: File): Promise<string> => {
       },
       body: JSON.stringify({
         data: base64data,
-        folder: "cafe-menu",
+        folder: "sorrel",
       }),
     })
   
