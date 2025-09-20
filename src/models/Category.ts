@@ -5,7 +5,7 @@ import mongoose from "mongoose"
 export interface ICategory {
   _id?: mongoose.Types.ObjectId | string
   name: string
-  group: "صبحانه" | "قلیان" | "بار گرم" | "بار سرد" | "کیک و دسر" | "غذاها"
+  group: string
   order?: number
   createdAt?: Date
   updatedAt?: Date

@@ -7,24 +7,20 @@ import { Button } from "@/components/ui/button"
 import { Edit, Trash2, GripVertical } from "lucide-react"
 
 interface category {
-    id: string, 
-    name: string, 
-    description: string,
-    bgColor: string,
-    textColor: string,
-    order: number
+  _id: string;
+  name: string;
+  group: string
+  order: number;
 }
 
 interface SortableCategoryItemProps {
   category: category
-  onEdit: (category: category) => void
-  onDelete: (id: string, name: string) => void
   sortDisabled: boolean
 }
 
-export default function SortableCategoryItem({ category, onEdit, onDelete, sortDisabled }: SortableCategoryItemProps) {
+export default function SortableCategoryItem({ category, sortDisabled }: SortableCategoryItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id: category.id,
+    id: category._id,
     // Add these properties to improve touch handling
     data: {
       type: "category",
@@ -43,7 +39,7 @@ export default function SortableCategoryItem({ category, onEdit, onDelete, sortD
     <div ref={setNodeRef} style={style} className="mb-3 touch-manipulation">
       <Card className={`overflow-hidden ${isDragging ? "shadow-lg" : ""}`}>
         <CardContent className="p-0">
-          <div className={`p-3 flex flex-row-reverse justify-between items-center bg-${category.bgColor.length > 0 ? category.bgColor : "white"} text-${category.bgColor.length > 0? "white" : "qqdarkbrown"}`}>
+          <div className="p-3 flex flex-row-reverse justify-between items-center bg-white text-qqdarkbrown">
             <div className="flex flex-row-reverse items-center gap-3">
               <Button
                 variant="ghost"
@@ -67,18 +63,7 @@ export default function SortableCategoryItem({ category, onEdit, onDelete, sortD
                   {/* {IconComponent && <IconComponent className="w-5 h-5" />} */}
                   <h3 className="font-medium">{category.name}</h3>
                 </div>
-                {category.description && <p className="text-sm">{category.description}</p>}
               </div>
-            </div>
-            <div className="flex flex-row-reverse gap-2">
-              <Button variant="ghost" size="sm" className="gr" onClick={() => onEdit(category)}>
-                <Edit className="w-4 h-4" />
-                <span className="sr-only">ویرایش</span>
-              </Button>
-              <Button variant="ghost" size="sm" className="group bg-white hover:bg-qqorange" onClick={() => onDelete(category.id, category.name)}>
-                <Trash2 className="w-4 h-4 text-qqorange group-hover:text-red-50" />
-                <span className="sr-only">حذف</span>
-              </Button>
             </div>
           </div>
         </CardContent>
