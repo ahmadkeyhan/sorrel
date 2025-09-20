@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import MenuCategories from "@/components/menu/menuCategories";
 import { Button } from "@/components/ui/button";
-import { ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getCategories } from "@/lib/data/categoryData";
 
 interface Group {
@@ -28,6 +28,7 @@ interface groupedCategories {
 
 export default function Home() {
     const [group,setGroup] = useState<Group | null>(null);
+    const [groupIndex,setGroupIndex] = useState(0);
     const [categories, setCategories] = useState<category[]>([])
     const [groupedCategories, setGroupedCategories] = useState<groupedCategories>({});
     const [loading,setLoading] = useState<boolean>(true)
@@ -146,11 +147,12 @@ export default function Home() {
             <main className="min-h-screen bg-amber-50">
                 <div className="container p-2 mx-auto max-w-3xl">
                     <section className="space-y-2">
-                        {groups.map((group) => {
+                        {groups.map((group, index) => {
                             return (
                                 <div key={group.title} 
                                     onClick={() => {
                                         setGroup(group)
+                                        setGroupIndex(index)
                                         window.scrollTo({ top: 0, behavior: 'smooth' })
                                     }} 
                                     className={`flex justify-center items-center w-full border-2 border-teal-700 rounded-[0.125rem] aspect-[4/1] bg-${group.bgColor} text-${group.textColor}`}
@@ -174,13 +176,37 @@ export default function Home() {
                                     setGroup(null)
                                     window.scrollTo({ top: 0, behavior: 'smooth' })
                                 }}  
-                                className={`border-2 rounded-[0.125rem] text-${group.textColor} border-${group.textColor}`}
+                                className={`text-${group.textColor} border-${group.textColor}`}
                             >
                                 <ChevronRight className="w-5 h-5" />
                             </Button>
                             <h2 className="font-black text-xl">{group.title}</h2>
                         </div>
                         <MenuCategories categories={groupedCategories[group.name]} group={group} />
+                        <div className="flex w-full justify-between items-center">
+                            <Button 
+                                variant="outline" 
+                                size="sm" 
+                                onClick={() => {
+                                    setGroup(groups[(groupIndex - 1 + groups.length) % groups.length])
+                                    setGroupIndex((groupIndex - 1 + groups.length) % groups.length)
+                                }}
+                                className={`text-${group.textColor} border-${group.textColor} pr-1`}>
+                                <p>{groups[(groupIndex - 1 + groups.length) % groups.length].name}</p>
+                                <ChevronRight className="w-5 h-5" />
+                            </Button>
+                            <Button 
+                                variant="outline" 
+                                size="sm" 
+                                onClick={() => {
+                                    setGroup(groups[(groupIndex + 1) % groups.length])
+                                    setGroupIndex((groupIndex + 1) % groups.length)
+                                }}
+                                className={`text-${group.textColor} border-${group.textColor} pl-1`}>
+                                <ChevronLeft className="w-5 h-5" />
+                                <p>{groups[(groupIndex + 1) % groups.length].name}</p>
+                            </Button>
+                        </div>
                     </section>
                 </div>
             </main>
