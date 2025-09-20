@@ -11,10 +11,7 @@ import {
   ChevronDown,
   ChevronUp,
   LucideListStart,
-  PlusCircle,
-  MinusCircle,
 } from "lucide-react";
-import { Label } from "@/components/ui/label";
 import {
   DndContext,
   closestCenter,
@@ -35,14 +32,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textArea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   getMenuItems,
   createMenuItem,
@@ -52,18 +48,15 @@ import {
 } from "@/lib/data/itemData";
 import { getCategories } from "@/lib/data/categoryData";
 import { useToast } from "@/components/ui/toastContext";
-
 import ImageUploader from "../imageUploader";
 import Image from "next/image";
 import SortableMenuItem from "./sortableMenuItem";
 import { deleteImage } from "@/lib/imageUtils";
 import AvailabilityToggle from "./availabilityToggle";
-import * as LucideIcons from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface item {
-  id: string;
+  _id: string;
   name: string;
   price?: number
   categoryId: string;
@@ -74,9 +67,9 @@ interface item {
 }
 
 interface category {
-  id: string;
+  _id: string;
   name: string;
-  group: "صبحانه" | "قلیان" | "بار گرم" | "بار سرد" | "کیک و دسر" | "غذاها"
+  group: string
   order: number;
 }
 
@@ -161,7 +154,7 @@ export default function MenuItemManager({ isAdmin = true }) {
         // Only add if not already in this category group
         if (
           !grouped[item.categoryId].find(
-            (existingItem) => existingItem.id === item.id
+            (existingItem) => existingItem._id === item._id
           )
         ) {
           grouped[item.categoryId].push(item);
@@ -178,7 +171,7 @@ export default function MenuItemManager({ isAdmin = true }) {
     // Expand all categories by default
     if (categories.length > 0) {
       const newExpanded = new Set<string>();
-      categories.forEach((category) => newExpanded.add(category.id));
+      categories.forEach((category) => newExpanded.add(category._id));
       setExpandedCategories(newExpanded);
     }
   }, [items, categories]);
@@ -205,7 +198,7 @@ export default function MenuItemManager({ isAdmin = true }) {
   const handleCreateSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-
+      console.log(newItem)
       await createMenuItem(newItem);
       setNewItem({
         name: "",
@@ -230,15 +223,7 @@ export default function MenuItemManager({ isAdmin = true }) {
   };
 
   const handleEditClick = (item: item) => {
-    setEditingId(item.id);
-
-    // Handle both old single categoryId and new multiple categoryIds
-    // const categoryIds = Array.isArray(item.categoryIds)
-    //   ? item.categoryIds.map((id) => (typeof id === "string" ? id : id.toString()))
-    //   : item.categoryIds
-    //     ? [typeof item.categoryIds === "string" ? item.categoryIds : item.categoryIds.toString()]
-    //     : []
-
+    setEditingId(item._id);
     setEditForm({
       name: item.name,
       price: item.price,
@@ -277,7 +262,7 @@ export default function MenuItemManager({ isAdmin = true }) {
   const handleDeleteClick = async (id: string, name: string) => {
     if (window.confirm(`از حذف "${name}" مطمئنید؟`)) {
       try {
-        const itemToDelete = items.find((item) => item.id === id);
+        const itemToDelete = items.find((item) => item._id === id);
         await deleteMenuItem(id);
         if (itemToDelete?.image) {
           try {
@@ -310,8 +295,8 @@ export default function MenuItemManager({ isAdmin = true }) {
         const categoryItems = groupedItems[isReordering] || []
 
         // Calculate the new order of items
-        const oldIndex = categoryItems.findIndex((item) => item.id === active.id)
-        const newIndex = categoryItems.findIndex((item) => item.id === over.id)
+        const oldIndex = categoryItems.findIndex((item) => item._id === active.id)
+        const newIndex = categoryItems.findIndex((item) => item._id === over.id)
 
         // Create the new array with the updated order
         const updatedItems = arrayMove([...categoryItems], oldIndex, newIndex)
@@ -331,15 +316,15 @@ export default function MenuItemManager({ isAdmin = true }) {
         // Create a mapping of id to new order
         const orderMap = new Map()
         updatedItems.forEach((item, index) => {
-          if (item.id) {
-            orderMap.set(item.id, index)
+          if (item._id) {
+            orderMap.set(item._id, index)
           }
         })
 
         // Update the order of the items
         itemsToUpdate.forEach((item) => {
-          if (item.id && orderMap.has(item.id)) {
-            item.order = orderMap.get(item.id)
+          if (item._id && orderMap.has(item._id)) {
+            item.order = orderMap.get(item._id)
           }
         })
 
@@ -347,7 +332,7 @@ export default function MenuItemManager({ isAdmin = true }) {
         setItems([...otherItems, ...itemsToUpdate])
 
         // Get the ordered IDs from the updated array
-        const orderedIds = updatedItems.map((item) => item.id as string)
+        const orderedIds = updatedItems.map((item) => item._id as string)
 
         // Save the new order to the database directly
         await reorderMenuItems(isReordering, orderedIds)
@@ -370,6 +355,7 @@ export default function MenuItemManager({ isAdmin = true }) {
       }
     }
   }
+  console.log(categories)
 
   return (
     <div className="space-y-6">
@@ -413,7 +399,7 @@ export default function MenuItemManager({ isAdmin = true }) {
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
+                    <SelectItem key={category._id} value={category._id}>
                       {category.name}
                     </SelectItem>
                   ))}
@@ -441,12 +427,12 @@ export default function MenuItemManager({ isAdmin = true }) {
           </div>
         ) : (
           categories.map((category) => {
-            const categoryItems = groupedItems[category.id] || []
-            const isExpanded = expandedCategories.has(category.id)
+            const categoryItems = groupedItems[category._id] || []
+            const isExpanded = expandedCategories.has(category._id)
 
             return (
-              <Card key={category.id} className="overflow-hidden">
-                <CardHeader className="py-3 px-4 cursor-pointer" onClick={() => toggleCategory(category.id)}>
+              <Card key={category._id} className="overflow-hidden">
+                <CardHeader className="py-3 px-4 cursor-pointer" onClick={() => toggleCategory(category._id)}>
                   <div className="flex flex-row-reverse justify-between items-center text-qqdarkbrown">
                     <CardTitle className="text-lg flex items-center">
                       <h2>{category.name}</h2>
@@ -467,7 +453,7 @@ export default function MenuItemManager({ isAdmin = true }) {
                       <div className="space-y-2">
                         {isAdmin && (
                           <div className="flex flex-row-reverse justify-between items-center mb-2 text-base text-qqbrown">
-                            {isReordering === category.id ? (
+                            {isReordering === category._id ? (
                               <Button
                                 variant="outline"
                                 size="sm"
@@ -480,7 +466,7 @@ export default function MenuItemManager({ isAdmin = true }) {
                               <Button
                                 variant="outline"
                                 size="sm"
-                                onClick={() => setIsReordering(category.id)}
+                                onClick={() => setIsReordering(category._id)}
                                 disabled={isReordering !== null}
                               >
                                 <LucideListStart className="h-5 w-5" />
@@ -490,15 +476,15 @@ export default function MenuItemManager({ isAdmin = true }) {
                           </div>
                         )}
 
-                        {isReordering === category.id && isAdmin ? (
+                        {isReordering === category._id && isAdmin ? (
                           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                             <SortableContext
-                              items={categoryItems.map((item) => item.id as string)}
+                              items={categoryItems.map((item) => item._id as string)}
                               strategy={verticalListSortingStrategy}
                             >
                               {categoryItems.map((item) => (
                                 <SortableMenuItem
-                                  key={item.id}
+                                  key={item._id}
                                   item={item}
                                   category={category}
                                   onEdit={handleEditClick}
@@ -510,8 +496,8 @@ export default function MenuItemManager({ isAdmin = true }) {
                         ) : (
                           <div className="space-y-3">
                             {categoryItems.map((item) => {
-                              if (editingId === item.id && isAdmin) return (
-                                <Card key={item.id} className="overflow-hidden">
+                              if (editingId === item._id && isAdmin) return (
+                                <Card key={item._id} className="overflow-hidden">
                                   <CardContent className="p-0">
                                     <form onSubmit={handleUpdateSubmit} className="p-4 space-y-4">
                                       <div dir="rtl" className="grid gap-4 sm:grid-cols-2">
@@ -551,7 +537,7 @@ export default function MenuItemManager({ isAdmin = true }) {
                                             </SelectTrigger>
                                             <SelectContent>
                                               {categories.map((category) => (
-                                                <SelectItem key={category.id} value={category.id}>
+                                                <SelectItem key={category._id} value={category._id}>
                                                   {category.name}
                                                 </SelectItem>
                                               ))}
@@ -579,7 +565,7 @@ export default function MenuItemManager({ isAdmin = true }) {
                                   </CardContent>
                                 </Card>
                               ); else return (
-                                <Card key={item.id} className="overflow-hidden">
+                                <Card key={item._id} className="overflow-hidden">
                                   <CardContent className="p-0">
                                     <div className="p-4 flex flex-row-reverse gap-4 items-center">
                                       <div className="flex flex-col justify-between items-center gap-2">
@@ -593,7 +579,7 @@ export default function MenuItemManager({ isAdmin = true }) {
                                           </div>
                                         )}
                                         <AvailabilityToggle 
-                                              itemId={item.id || ""}
+                                              itemId={item._id || ""}
                                               itemName={item.name}
                                               item={item}
                                               initialAvailable={item.available}
@@ -623,7 +609,7 @@ export default function MenuItemManager({ isAdmin = true }) {
                                                 <Button 
                                                   variant="outline" 
                                                   size="sm" 
-                                                  className="group bg-background hover:bg-red-500" onClick={() => handleDeleteClick(item.id, item.name)}>
+                                                  className="group bg-background hover:bg-red-500" onClick={() => handleDeleteClick(item._id, item.name)}>
                                                   <Trash2 className="w-4 h-4 text-red-500 group-hover:text-red-50" />
                                                   <span className="sr-only">حذف</span>
                                                 </Button>

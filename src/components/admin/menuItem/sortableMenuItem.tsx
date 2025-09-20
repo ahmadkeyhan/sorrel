@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import * as LucideIcons from "lucide-react"
 
 interface item {
-  id: string;
+  _id: string;
   name: string;
   price?: number
   categoryId: string;
@@ -20,9 +20,9 @@ interface item {
 }
 
 interface category {
-  id: string;
+  _id: string;
   name: string;
-  group: "صبحانه" | "قلیان" | "بار گرم" | "بار سرد" | "کیک و دسر" | "غذاها"
+  group: string
   order: number;
 }
 
@@ -35,7 +35,7 @@ interface SortableMenuItemProps {
 
 export default function SortableMenuItem({ item }: SortableMenuItemProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id: item.id || "",
+    id: item._id || "",
     // Add these properties to improve touch handling
     data: {
       type: "menuItem",
