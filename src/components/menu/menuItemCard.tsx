@@ -6,39 +6,29 @@ import { motion } from "framer-motion";
 import { formatCurrency } from "@/lib/utils";
 import * as LucideIcons from "lucide-react"
 
-interface priceListItem {
-  subItem: string;
-  price: number;
-}
-
 interface item {
-  id: string;
+  _id: string;
   name: string;
-  description: string;
-  iconName: string;
-  priceList: priceListItem[];
-  categoryIds: string[];
+  price?: number[]
+  categoryId: string;
   ingredients: string;
   image: string;
   order: number;
+  available: boolean;
 }
 
 export default function MenuItemCard({
-  bgColor,
   item,
   onClick,
 }: {
-  bgColor: string
   item: item;
   onClick: (item: item) => void;
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
-  const IconComponent = item.iconName ? (LucideIcons as any)[item.iconName] : null
-
   return (
     <motion.div
-      className={`flex items-center gap-4 p-2 rounded-lg  bg-${bgColor.length > 0 ? bgColor : "white"} text-${bgColor.length > 0? "white" : "qqdarkbrown"} hover:shadow-md transition-shadow cursor-pointer`}
+      className={`flex items-center gap-4 p-2 rounded-lg  bg-white text-qqdarkbrown hover:shadow-md transition-shadow cursor-pointer`}
       whileHover={{ y: -3 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
@@ -63,32 +53,12 @@ export default function MenuItemCard({
       <div className="space-y-1 flex-1">
         <div className="flex justify-between items-start">
           <div className="flex items-center gap-1">
-            {IconComponent && <IconComponent className="w-4 h-4" />}
-            {item.iconName === "both" && 
-              <>
-                <LucideIcons.Hand className="w-4 h-4" />
-                <LucideIcons.Snowflake className="w-4 h-4" />
-              </>
-            }
             <h2 className="font-bold text-base">{item.name}</h2>
           </div>
-          {item.priceList.length === 1 && <h3 className="font-semibold">{formatCurrency(item.priceList[0].price)}</h3>}
+          {item.price!.length === 1 && <h3 className="font-semibold">{formatCurrency(item.price![0])}</h3>}
         </div>
-        <p className="text-sm line-clamp-2 indent-2">
-          {item.description}
-        </p>
         {/* Show price list items */}
-        {item.priceList.length > 1 && <div className="mt-1 flex flex-col gap-1">
-          {item.priceList.map((subItem, index) => (
-            <div
-              key={index}
-              className="text-base py-0.5 flex justify-between"
-            >
-              <p>{subItem.subItem}</p>
-              <h3 className="font-semibold">{formatCurrency(subItem.price)}</h3>
-            </div>
-          ))}
-        </div>}
+        
         {item.ingredients && (
           <p className="text-sm">
             {`(${item.ingredients})`}

@@ -8,30 +8,22 @@ import MenuItemCard from "./menuItemCard";
 import MenuItemModal from "./menuItemModal";
 import * as LucideIcons from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import Terms from "./terms";
-
-interface category {
-  id: string;
-  name: string;
-  bgColor: string;
-  textColor: string;
-  description: string;
-}
-
-interface priceListItem {
-  subItem: string;
-  price: number;
-}
 
 interface item {
-  id: string;
+  _id: string;
   name: string;
-  description: string;
-  iconName: string;
-  priceList: priceListItem[];
-  categoryIds: string[];
+  price?: number[]
+  categoryId: string;
   ingredients: string;
   image: string;
+  order: number;
+  available: boolean;
+}
+
+interface category {
+  _id: string;
+  name: string;
+  group: string
   order: number;
 }
 
@@ -101,30 +93,14 @@ export default function MenuCategories() {
         try {
           const items = await getCategoryItems(categoryId)
 
-          // Add all category names to each item (since items can belong to multiple categories)
-          const itemsWithCategories = items.map((item : item) => {
-            // Get all category names for this item
-            const itemCategoryNames: string[] = []
+          // Add category name to each item
+          const currentCategory = categories.find((cat: category) => cat._id === categoryId)
+          const itemsWithCategory = items.map((item: item) => ({
+            ...item,
+            categoryName: currentCategory ? currentCategory.name : "",
+          }))
 
-            // Handle both old format (single categoryId) and new format (multiple categoryIds)
-            const itemCategoryIds = item.categoryIds
-
-            itemCategoryIds.forEach((catId) => {
-              const category = categories.find((cat) => cat.id === catId)
-              if (category) {
-                itemCategoryNames.push(category.name)
-              }
-            })
-
-            return {
-              ...item,
-              categoryNames: itemCategoryNames,
-              // Keep backward compatibility
-              categoryName: itemCategoryNames.length > 0 ? itemCategoryNames.join(", ") : "آیتم منو",
-            }
-          })
-
-          return { categoryId, items: itemsWithCategories }
+          return { categoryId, items: itemsWithCategory }
         } catch (error) {
           console.error(`Error loading items for category ${categoryId}:`, error)
           return { categoryId, items: [] }
@@ -157,9 +133,9 @@ export default function MenuCategories() {
 
   const handleItemClick = (item: item) => {
     setSelectedItem(item);
-    // categories.map((category) => {
-    //   if (category.id === item.categoryId) setModalCategoryName(category.name)
-    // })
+    categories.map((category) => {
+      if (category._id === item.categoryId) setModalCategoryName(category.name)
+    })
     setIsModalOpen(true);
   };
 
@@ -176,22 +152,22 @@ export default function MenuCategories() {
           // Dynamically get the icon component if iconName exists
           // const IconComponent = category.iconName ? (LucideIcons as any)[category.iconName] : null
           
-          const items = categoryItems[category.id] || []
-          const isLoading = loadingCategories.has(category.id)
+          const items = categoryItems[category._id] || []
+          const isLoading = loadingCategories.has(category._id)
 
           return (
             <AccordionItem
-              key={category.id}
-              value={category.id}
-              className={`${category.bgColor.length === 0 ? "border border-qqcream" : ""} rounded-2xl mb-4 overflow-hidden`}
+              key={category._id}
+              value={category._id}
+              className={`rounded-2xl mb-4 overflow-hidden`}
             >
-              <AccordionTrigger className={`px-4 py-3 bg-${category.bgColor.length > 0 ? category.bgColor : "white"} text-${category.bgColor.length > 0? "white" : "qqdarkbrown"} hover:no-underline`}>
+              <AccordionTrigger className={`px-4 py-3 bg-white text-qqdarkbrown hover:no-underline`}>
                 <div className="flex items-center gap-2">
                   {/* {IconComponent && <IconComponent className="w-5 h-5 text-amber-600" />} */}
                   <span className="font-medium">{category.name}</span>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className={`px-4 bg-${category.bgColor.length > 0 ? category.bgColor : "white"} text-${category.bgColor.length > 0? "white" : "qqdarkbrown"}`}>
+              <AccordionContent className={`px-4 bg-white text-qqdarkbrown`}>
                 {isLoading ? (
                   <div className="py-12 flex justify-center items-center">
                   <div className="flex space-x-3">
@@ -214,14 +190,14 @@ export default function MenuCategories() {
                     <AnimatePresence>
                       {items.map((item, index) => (
                         <motion.div
-                          key={item.id}
+                          key={item._id}
                           variants={itemVariants}
                           initial="hidden"
                           animate="visible"
                           exit="hidden"
                           transition={{ delay: index * 0.05 }}
                         >
-                          <MenuItemCard bgColor={category.bgColor} item={item} onClick={handleItemClick} />
+                          <MenuItemCard  item={item} onClick={handleItemClick} />
                         </motion.div>
                       ))}
                     </AnimatePresence>
@@ -247,8 +223,8 @@ export default function MenuCategories() {
           </div>
         </div>
       )}
-      {categories.length !== 0 && <Terms />}
-      <MenuItemModal item={selectedItem} isOpen={isModalOpen} onClose={handleCloseModal} />
+
+      <MenuItemModal item={selectedItem} categoryName={modalCategoryName} isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 }

@@ -5,31 +5,24 @@ import Image from "next/image"
 import { Dialog, DialogContent, DialogClose, DialogTitle } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { IPriceListItem } from "@/models/MenuItem"
 import { formatCurrency } from "@/lib/utils"
 import * as LucideIcons from "lucide-react"
 import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, Key } from "react"
 
-interface priceListItem {
-  subItem: string;
-  price: number;
-}
-
 interface item {
-  id: string;
+  _id: string;
   name: string;
-  description: string;
-  iconName: string;
-  priceList: priceListItem[];
-  // categoryName: string;
+  price?: number[]
+  categoryId: string;
   ingredients: string;
   image: string;
   order: number;
+  available: boolean;
 }
 
 interface MenuItemModalProps {
   item: any
-  // categoryName: string
+  categoryName: string
   isOpen: boolean
   onClose: () => void
 }
@@ -119,13 +112,12 @@ export default function MenuItemModal({ item, isOpen, onClose }: MenuItemModalPr
                     transition={{ delay: 0.2 }}
                   >
                     <div className="space-y-2 pr-2 text-qqdarkbrown">
-                      {item.priceList.map((priceItem: IPriceListItem, index: number) => (
+                      {item.price.map((price: number, index: number) => (
                         <div
                           key={index}
                           className="flex justify-between items-center py-1"
                         >
-                          <span className="text-lg">{priceItem.subItem}</span>
-                          <h3 className="font-semibold">{formatCurrency(priceItem.price)}</h3>
+                          <h3 className="font-semibold">{formatCurrency(price)}</h3>
                         </div>
                       ))}
                     </div>
