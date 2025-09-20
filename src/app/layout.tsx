@@ -58,7 +58,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
         <link rel="icon" href="/qqicon.ico" sizes="any" />
       </head>
-      <body>
+      <body className="bg-amber-50">
         <Providers>
           <ToastProvider>
             <Navbar />

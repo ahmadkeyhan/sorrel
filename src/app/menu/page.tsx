@@ -190,6 +190,7 @@ export default function Home() {
                                 onClick={() => {
                                     setGroup(groups[(groupIndex - 1 + groups.length) % groups.length])
                                     setGroupIndex((groupIndex - 1 + groups.length) % groups.length)
+                                    window.scrollTo({ top: 0, behavior: 'smooth' })
                                 }}
                                 className={`text-${group.textColor} border-${group.textColor} pr-1`}>
                                 <p>{groups[(groupIndex - 1 + groups.length) % groups.length].name}</p>
@@ -201,6 +202,7 @@ export default function Home() {
                                 onClick={() => {
                                     setGroup(groups[(groupIndex + 1) % groups.length])
                                     setGroupIndex((groupIndex + 1) % groups.length)
+                                    window.scrollTo({ top: 0, behavior: 'smooth' })
                                 }}
                                 className={`text-${group.textColor} border-${group.textColor} pl-1`}>
                                 <ChevronLeft className="w-5 h-5" />

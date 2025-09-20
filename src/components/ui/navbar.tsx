@@ -15,12 +15,6 @@ const navItems = [
   { name: "خانه", href: "/", icon: 'House' },
   { name: "منو", href: "/menu", icon: 'BookOpenText' },
   { name: "فروشگاه", href: "/shop", icon: 'ShoppingBag' },
-  { name: "بولتن", href: "/bulletin", icon: 'Pin' },
-  { name: "وبلاگ", href: "/blog", icon: 'NotepadText' },
-  { name: "گالری", href: "/gallery", icon: 'Image' },
-  { name: "درباره", href: "/about", icon: 'Quote' },
-  { name: "همکاری", href: "/cooperation", icon: 'HeartHandshake' },
-  // { name: "مسئولیت اجتماعی", href: "/responsibility", icon: 'HandHeart' },
 ];
 
 export function Navbar() {
@@ -36,22 +30,30 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50">
       {/* Glassmorphism background with futuristic border */}
-      <div className="absolute inset-0 backdrop-blur-md shadow-md bg-amber-50"></div>
+      <div className="absolute inset-0 backdrop-blur-md bg-amber-50/50"></div>
 
       {/* Decorative gradient line */}
-      <nav className="relative mx-auto flex max-w-7xl h-[3.75rem] sm:h-[4.5rem] items-center justify-between p-4">
+      <nav className="relative mx-auto flex max-w-7xl h-16 sm:h-[4.5rem] items-center justify-between p-4">
         {/* Logo */}
         <div className="flex items-center text-amber-500">
           <Link href="/">
-            <div className="w-9">
+            <div className="w-16">
                 <Image
-                src={"/qqLogo.png"}
-                alt="لوگوی قوشاقاف"
-                width={173}
-                height={121}
+                src={"/logo.png"}
+                alt="لوگوی سورل"
+                width={913}
+                height={789}
                 />
             </div>
           </Link>
+        </div>
+        <div className="w-16">
+            <Image
+            src={"/typo.png"}
+            alt="تایپولوگوی سورل"
+            width={904}
+            height={280}
+            />
         </div>
 
         {/* Desktop navigation */}
@@ -62,17 +64,17 @@ export function Navbar() {
               <Link
               key={item.name}
               href={item.href}
-              className="relative px-3 py-2 text-sm font-medium text-qqdarkbrown hover:text-qqteal transition-colors duration-300 group"
+              className="relative px-3 py-2 text-sm font-medium text-teal-700 hover:text-amber-500 transition-colors duration-300 group"
             >
               <div className="flex items-center gap-2">
                 {IconComponent && <IconComponent className="h-4 w-4" />}
                 <h3 className="font-medium text-sm">{item.name}</h3>
               </div>
-              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-qqteal scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out origin-left"></span>
+              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-amber-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out origin-left"></span>
             </Link>
           )})}
           <Link href={'/admin'}>
-                <Button variant="outline" size="sm" className="text-qqdarkbrown hover:bg-qqcream">
+                <Button variant="outline" size="sm" className="text-amber-500 hover:bg-amber-500 hover:text-amber-50 border-amber-500">
                     {session?.user ? session.user.name : "پنل ادمین"}
                     <User className="w-4 h-4" />
                 </Button>
@@ -82,7 +84,7 @@ export function Navbar() {
                   variant="outline"
                   size="sm"
                   onClick={handleLogout}
-                  className="text-qqdarkbrown hover:bg-qqcream"
+                  className="text-amber-500 hover:bg-amber-500 hover:text-amber-50 border-amber-500"
                   >
                     <LogOut className="w-4 h-4" />
                   </Button>
@@ -92,10 +94,11 @@ export function Navbar() {
         {/* Right side buttons */}
         <div className="flex items-center gap-1">
           {/* Mobile menu button */}
+          <div className="w-6"></div>
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden relative h-9 w-9 rounded-full overflow-hidden text-qqteal hover:bg-qqteal hover:text-white backdrop-blur-sm transition-colors duration-300"
+            className="lg:hidden relative h-9 w-9 overflow-hidden text-teal-700 hover:bg-teal-700 hover:text-white backdrop-blur-sm transition-colors duration-300"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <span className="sr-only">Open main menu</span>
@@ -144,37 +147,37 @@ export function Navbar() {
               className="flex items-center gap-2"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <div className="w-9">
+              <div className="w-16">
                 <Image
-                src={"/qqLogo.png"}
-                alt="لوگوی قوشاقاف"
-                width={173}
-                height={121}
+                src={"/logo.png"}
+                alt="لوگوی سورل"
+                width={913}
+                height={789}
                 />
             </div>
             </Link>
             <Button
               variant="ghost"
               size="icon"
-              className="relative h-9 w-9 rounded-full overflow-hidden group text-qqteal hover:bg-qqteal hover:text-white backdrop-blur-sm transition-colors duration-300"
+              className="relative h-9 w-9 overflow-hidden group text-teal-700 hover:bg-teal-700 hover:text-amber-50 backdrop-blur-sm transition-colors duration-300"
               onClick={() => setMobileMenuOpen(false)}
             >
               <X className="h-5 w-5" />
             </Button>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-2">
             {navItems.map((item) => {
               const IconComponent = item.icon ? (LucideIcons as any)[item.icon] : null
               return (
               <Link
                 key={item.name}
                 href={item.href}
-                className="block px-3 py-2 text-base font-medium text-qqdarkbrown hover:bg-primary/5 rounded-md transition-colors duration-300"
+                className="block p-4 text-base text-teal-700 border-2 border-teal-700 hover:bg-teal-700 hover:text-amber-50 rounded-[0.125rem] transition-colors duration-300"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <div className="flex justify-start items-center gap-2">
-                  {IconComponent && <IconComponent className="h-4 w-4 text-qqorange" />}
-                  <h3 className="font-medium text-sm">{item.name}</h3>
+                  {IconComponent && <IconComponent className="h-4 w-4 text-amber-500" />}
+                  <h3 className="font-extrabold text-sm">{item.name}</h3>
                 </div>
               </Link>
             )})}
@@ -185,7 +188,7 @@ export function Navbar() {
                 href={'/admin'}
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <Button variant="outline" size="sm" className="text-qqdarkbrown">
+                <Button variant="outline" size="sm" className="text-amber-500 border-amber-500">
                     {session?.user ? session.user.name : "پنل ادمین"}
                     <User className="w-4 h-4" />
                 </Button>
@@ -195,7 +198,7 @@ export function Navbar() {
                   variant="outline"
                   size="sm"
                   onClick={handleLogout}
-                  className="text-qqdarkbrown"
+                  className="text-amber-500 border-amber-500"
                   >
                     <LogOut className="w-4 h-4" />
                   </Button>
