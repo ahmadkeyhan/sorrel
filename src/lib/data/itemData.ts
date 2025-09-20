@@ -3,6 +3,7 @@
 import connectToDatabase from "../mongodb";
 import { MenuItem, IMenuItem } from "../../models/MenuItem";
 import mongoose from "mongoose";
+import { formatCurrency } from "../utils";
 
 // Menu Item CRUD operations
 export async function getMenuItems() {
@@ -10,7 +11,29 @@ export async function getMenuItems() {
     await connectToDatabase();
     // Updated to populate category information
     const menuItems = await MenuItem.find().sort({ name: 1 })
-    return JSON.parse(JSON.stringify(menuItems));
+    const formattedItems = menuItems.map((item) => {
+          const isNumeric = (word: string) => /^[+-]?\d+(\.\d+)?$/.test(word)
+          //check for numbers in name
+          const nameArray = item.name.split(" ")
+          const formattedNameArray: string[] = []
+          nameArray.map((nameWord: string) => {
+            if (isNumeric(nameWord)) formattedNameArray.push(formatCurrency(Number(nameWord)))
+            else formattedNameArray.push(nameWord)
+          })
+          item.name = formattedNameArray.join(" ")
+    
+          //check for numbers in description
+          const ingredientsArray = item.ingredients.split(" ")
+          const formattedIngredientsArray: string[] = []
+          ingredientsArray.map((ingredientWord: string) => {
+            if (isNumeric(ingredientWord)) formattedIngredientsArray.push(formatCurrency(Number(ingredientWord)))
+            else formattedIngredientsArray.push(ingredientWord)
+          })
+          item.ingredients = formattedIngredientsArray.join(" ")
+    
+          return item
+        })
+    return JSON.parse(JSON.stringify(formattedItems));
   } catch (error) {
     console.error("Error fetching menu items:", error);
     throw new Error("Failed to fetch menu items");
