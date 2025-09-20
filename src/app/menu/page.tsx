@@ -5,6 +5,7 @@ import MenuCategories from "@/components/menu/menuCategories";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getCategories } from "@/lib/data/categoryData";
+import Image from "next/image";
 
 interface Group {
     title: string
@@ -39,7 +40,7 @@ export default function Home() {
             bgColor: "amber-50",
             textColor: "teal-700",
             subtextColor: "teal-600",
-            imageSrc: "",
+            imageSrc: "/hotbg.png",
         },
         {
             title: "بــــــــــــــــــــــــارِ ســــَــــــــــــــــــــرد",
@@ -47,7 +48,7 @@ export default function Home() {
             bgColor: "amber-50",
             textColor: "teal-700",
             subtextColor: "teal-600",
-            imageSrc: "",
+            imageSrc: "/coldbg.png",
         },
         {
             title: "کِیـــــــــــــــــــک و دِســــِــــــــــــــــر",
@@ -55,7 +56,7 @@ export default function Home() {
             bgColor: "amber-50",
             textColor: "teal-700",
             subtextColor: "teal-600",
-            imageSrc: "",
+            imageSrc: "/cakebg.png",
         },
         {
             title: "غــــــــــــــــَــــــــــــــــــــــــــــــــــذاها",
@@ -63,7 +64,7 @@ export default function Home() {
             bgColor: "teal-700",
             textColor: "amber-50",
             subtextColor: "amber-50",
-            imageSrc: "",
+            imageSrc: "/foodbg.png",
         },
         {
             title: "صُبـــــــحانـــــــــــــــــــــــــــــــِــــــــه ",
@@ -71,7 +72,7 @@ export default function Home() {
             bgColor: "amber-50",
             textColor: "teal-700",
             subtextColor: "teal-600",
-            imageSrc: "",
+            imageSrc: "/breakfastbg.png",
         },
         {
             title: "قـــــِـــــــــــــــــــــــلیــــــــــــــــــــــان",
@@ -79,7 +80,7 @@ export default function Home() {
             bgColor: "amber-50",
             textColor: "teal-700",
             subtextColor: "teal-600",
-            imageSrc: "",
+            imageSrc: "/hookahbg.png",
         },
     ]
 
@@ -155,9 +156,17 @@ export default function Home() {
                                         setGroupIndex(index)
                                         window.scrollTo({ top: 0, behavior: 'smooth' })
                                     }} 
-                                    className={`flex justify-center items-center w-full border-2 border-teal-700 rounded-[0.125rem] aspect-[4/1] sm:aspect-[6/1] bg-${group.bgColor} text-${group.textColor}`}
+                                    className={`relative overflow-hidden flex justify-center items-center w-full border-2 border-teal-700 rounded-[0.125rem] aspect-[4/1] sm:aspect-[6/1] bg-${group.bgColor} text-${group.textColor}`}
                                 >
-                                    <h2 className="font-black text-xl sm:text-3xl">{group.title}</h2>
+                                    <div className="absolute w-full opacity-30">
+                                        <Image
+                                            src={group.imageSrc}
+                                            alt="لوگوی سورل"
+                                            width={1080}
+                                            height={1080}
+                                        />
+                                    </div>
+                                    <h2 className="font-black text-xl sm:text-3xl z-10">{group.title}</h2>
                                 </div>
                             )
                         })}
@@ -170,17 +179,25 @@ export default function Home() {
            <main className={`min-h-screen bg-${group? group.bgColor : "amber-50"}`}>
                 <div className="container p-2 mx-auto max-w-3xl">
                     <section className="space-y-2 relative">
-                        <div className={`flex justify-center sticky top-16 z-10 items-center gap-4 w-full border-2 border-${group.textColor} rounded-[0.125rem] aspect-[4/1] sm:aspect-[6/1] bg-${group.bgColor} text-${group.textColor}`}>
+                        <div className={`flex justify-center sticky overflow-hidden top-16 z-10 items-center gap-4 w-full border-2 border-${group.textColor} rounded-[0.125rem] aspect-[4/1] sm:aspect-[6/1] bg-${group.bgColor} text-${group.textColor}`}>
+                            <div className="absolute w-full opacity-30">
+                                <Image
+                                    src={group.imageSrc}
+                                    alt="لوگوی سورل"
+                                    width={1080}
+                                    height={1080}
+                                />
+                            </div>
                             <Button variant="outline" size="icon"     
                                 onClick={() => {
                                     setGroup(null)
                                     window.scrollTo({ top: 0, behavior: 'smooth' })
                                 }}  
-                                className={`text-${group.textColor} border-${group.textColor}`}
+                                className={`z-10 text-${group.textColor} border-${group.textColor}`}
                             >
                                 <ChevronRight className="w-5 h-5" />
                             </Button>
-                            <h2 className="font-black text-xl sm:text-3xl">{group.title}</h2>
+                            <h2 className="z-10 font-black text-xl sm:text-3xl">{group.title}</h2>
                         </div>
                         <MenuCategories categories={groupedCategories[group.name]} group={group} />
                         <div className="flex w-full justify-between items-center">
