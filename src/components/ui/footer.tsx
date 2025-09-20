@@ -13,7 +13,7 @@ export default function Footer() {
     return (
         <div className="w-full grid gap-4 sm:grid-cols-2 bg-teal-700 p-4 pt-6">
             <div className="flex flex-col gap-2 items-center text-white">
-                <div className="relative w-24 mb-2">
+                <div className="relative w-32 mb-2">
                     <Image
                         src={"/amberLogo.png"}
                         alt="لوگوی سورل"
