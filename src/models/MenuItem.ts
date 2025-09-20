@@ -7,7 +7,7 @@ import mongoose from "mongoose"
 export interface IMenuItem {
   _id?: mongoose.Types.ObjectId | string
   name: string
-  price?: number
+  price?: number[]
   categoryId: mongoose.Types.ObjectId | string
   ingredients?: string
   image?: string
@@ -22,7 +22,7 @@ export interface IMenuItem {
 const menuItemSchema = new Schema<IMenuItem>(
   {
     name: { type: String, required: true },
-    price: { type: Number }, 
+    price: [{ type: Number }], 
     categoryId: { type: Schema.Types.ObjectId, ref: "Category", required: true },
     ingredients: { type: String },
     image: { type: String },

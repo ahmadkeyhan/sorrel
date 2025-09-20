@@ -53,12 +53,13 @@ import Image from "next/image";
 import SortableMenuItem from "./sortableMenuItem";
 import { deleteImage } from "@/lib/imageUtils";
 import AvailabilityToggle from "./availabilityToggle";
+import PriceToggle from "./priceToggle";
 import { formatCurrency } from "@/lib/utils";
 
 interface item {
   _id: string;
   name: string;
-  price?: number
+  price?: number[]
   categoryId: string;
   ingredients: string;
   image: string;
@@ -79,7 +80,7 @@ interface groupedItems {
 
 type FormMenuItem = {
   name: string;
-  price?: number;
+  price?: number[];
   categoryId: string;
   ingredients: string;
   image: string;
@@ -92,16 +93,17 @@ export default function MenuItemManager({ isAdmin = true }) {
   const [categories, setCategories] = useState<category[]>([]);
   const [newItem, setNewItem] = useState<FormMenuItem>({
     name: "",
-    price: 0,
+    price: [],
     categoryId: "",
     ingredients: "",
     image: "",
     available: true,
   });
+  const [newItemSinglePrice, setNewItemSinglePrice] = useState<boolean>(true);
   const [editingId, setEditingId] = useState<string>("");
   const [editForm, setEditForm] = useState<FormMenuItem>({
     name: "",
-    price: 0,
+    price: [],
     categoryId: "",
     ingredients: "",
     image: "",
@@ -198,11 +200,10 @@ export default function MenuItemManager({ isAdmin = true }) {
   const handleCreateSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      console.log(newItem)
       await createMenuItem(newItem);
       setNewItem({
         name: "",
-        price: 0,
+        price: [],
         categoryId: "",
         ingredients: "",
         image: "",
@@ -355,13 +356,15 @@ export default function MenuItemManager({ isAdmin = true }) {
       }
     }
   }
-  console.log(categories)
 
   return (
     <div className="space-y-6">
       {isAdmin && (
         <form onSubmit={handleCreateSubmit} className="space-y-4 p-4 border border-slate-200 rounded-lg bg-white">
-          <h3 className="font-semibold text-qqteal">افزودن آیتم‌ جدید</h3>
+          <div dir="rtl" className="flex justify-between items-center">
+            <h3 className="font-semibold text-qqteal">افزودن آیتم‌ جدید</h3>
+            <PriceToggle initialPrice={true} onToggle={(checked) => setNewItemSinglePrice(checked)} />
+          </div>
           <div dir="rtl" className="grid gap-4 sm:grid-cols-2">
             <div>
               <Input
@@ -371,16 +374,37 @@ export default function MenuItemManager({ isAdmin = true }) {
                 required
               />
             </div>
-            <div>
-              <Input
-                placeholder="قیمت"
-                type="number"
-                step="1"
-                min="0"
-                value={newItem.price || ""}
-                onChange={(e) => setNewItem({ ...newItem, price: Number(e.target.value) })}
-              />
-            </div>
+            {newItemSinglePrice ? (
+              <div>
+                <Input
+                  placeholder="قیمت"
+                  type="number"
+                  step="1"
+                  min="0"
+                  value={newItem.price![0] || []}
+                  onChange={(e) => setNewItem({ ...newItem, price: [Number(e.target.value)] })}
+                />
+              </div>
+              ) : (
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="قیمت تک نفره"
+                    type="number"
+                    step="1"
+                    min="0"
+                    value={newItem.price![0] || []}
+                    onChange={(e) => setNewItem({ ...newItem, price: [Number(e.target.value), newItem.price![1]] })}
+                  />
+                  <Input
+                    placeholder="قیمت دو نفره"
+                    type="number"
+                    step="1"
+                    min="0"
+                    value={newItem.price![1] || []}
+                    onChange={(e) => setNewItem({ ...newItem, price: [newItem.price![0], Number(e.target.value)] })}
+                  />
+              </div>
+            )}
             <div>
               <Textarea
                 placeholder="مواد تشکیل دهنده (اختیاری)"
@@ -509,16 +533,37 @@ export default function MenuItemManager({ isAdmin = true }) {
                                             required
                                           />
                                         </div>
-                                        <div>
-                                          <Input
-                                            placeholder="قیمت"
-                                            type="number"
-                                            step="1"
-                                            min="0"
-                                            value={editForm.price || ""}
-                                            onChange={(e) => setEditForm({ ...editForm, price: Number(e.target.value) })}
-                                          />
-                                        </div>
+                                        {editForm.price!.length === 1 ? (
+                                          <div>
+                                            <Input
+                                              placeholder="قیمت"
+                                              type="number"
+                                              step="1"
+                                              min="0"
+                                              value={editForm.price![0] || []}
+                                              onChange={(e) => setEditForm({ ...editForm, price: [Number(e.target.value)] })}
+                                            />
+                                          </div>
+                                          ) : (
+                                            <div className="flex gap-2">
+                                              <Input
+                                                placeholder="قیمت تک نفره"
+                                                type="number"
+                                                step="1"
+                                                min="0"
+                                                value={editForm.price![0] || []}
+                                                onChange={(e) => setEditForm({ ...editForm, price: [Number(e.target.value), editForm.price![1]] })}
+                                              />
+                                              <Input
+                                                placeholder="قیمت دو نفره"
+                                                type="number"
+                                                step="1"
+                                                min="0"
+                                                value={editForm.price![1] || []}
+                                                onChange={(e) => setEditForm({ ...editForm, price: [editForm.price![0], Number(e.target.value)] })}
+                                              />
+                                          </div>
+                                        )}
                                         <div>
                                           <Textarea
                                             placeholder="مواد تشکیل دهنده (اختیاری)"
@@ -590,7 +635,8 @@ export default function MenuItemManager({ isAdmin = true }) {
                                           <div className="flex flex-row-reverse gap-1 items-center text-qqdarkbrown">
                                             <h3 className="font-medium">{item.name}</h3>
                                           </div>
-                                          {item.price && <h3 className="text-base font-semibold text-qqdarkbrown">{formatCurrency(item.price)}</h3>}
+                                          {item.price && item.price.length === 1 && <h3 className="text-base font-semibold text-qqdarkbrown">{formatCurrency(item.price[0])}</h3>}
+                                          {item.price && item.price.length === 2 && <h3 className="text-base font-semibold text-qqdarkbrown">{formatCurrency(item.price[1])}/{formatCurrency(item.price[0])}</h3>}
                                         </div>
                                         {item.ingredients && (
                                           <span className="text-sm text-brown">{item.ingredients}</span>

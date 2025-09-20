@@ -11,7 +11,7 @@ import * as LucideIcons from "lucide-react"
 interface item {
   _id: string;
   name: string;
-  price?: number
+  price?: number[]
   categoryId: string;
   ingredients: string;
   image: string;
