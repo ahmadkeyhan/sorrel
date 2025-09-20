@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getCategories } from "@/lib/data/categoryData";
 import { getCategoryItems } from "@/lib/data/itemData";
 import MenuItemCard from "./menuItemCard";
 import MenuItemModal from "./menuItemModal";
@@ -31,6 +30,15 @@ interface categoryItems {
   [key : string] : item[]
 }
 
+interface Group {
+    title: string
+    name: string
+    bgColor: string
+    textColor: string
+    subtextColor: string
+    imageSrc: string
+}
+
 
 // Animation variants for menu items
 const itemVariants = {
@@ -56,8 +64,8 @@ const spinnerVariants = {
   },
 }
 
-export default function MenuCategories() {
-  const [categories, setCategories] = useState<category[]>([]);
+export default function MenuCategories({categories, group} : {categories: category[], group: Group}) {
+
   const [categoryItems, setCategoryItems] = useState<categoryItems>({})
   const [selectedItem, setSelectedItem] = useState<item | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -65,14 +73,6 @@ export default function MenuCategories() {
   const [openCategories, setOpenCategories] = useState<string[]>([])
   const [modalCategoryName,setModalCategoryName] = useState<string>('')
 
-  useEffect(() => {
-    const loadCategories = async () => {
-      const data = await getCategories();
-      setCategories(data);
-    };
-
-    loadCategories();
-  }, []);
 
   useEffect(() => {
     const loadItemsForCategories = async () => {
@@ -159,26 +159,22 @@ export default function MenuCategories() {
             <AccordionItem
               key={category._id}
               value={category._id}
-              className={`rounded-2xl mb-4 overflow-hidden`}
+              className={`rounded-[0.125rem] mb-2 border-2 border-${group.textColor} overflow-hidden`}
             >
-              <AccordionTrigger className={`px-4 py-3 bg-white text-qqdarkbrown hover:no-underline`}>
+              <AccordionTrigger className={`px-4 py-3 text-${group.textColor} hover:no-underline`}>
                 <div className="flex items-center gap-2">
                   {/* {IconComponent && <IconComponent className="w-5 h-5 text-amber-600" />} */}
-                  <span className="font-medium">{category.name}</span>
+                  <h3 className="font-extrabold">{category.name}</h3>
                 </div>
               </AccordionTrigger>
-              <AccordionContent className={`px-4 bg-white text-qqdarkbrown`}>
+              <AccordionContent className={`p-4 text-${group.textColor}`}>
                 {isLoading ? (
-                  <div className="py-12 flex justify-center items-center">
+                  <div className="py-8 flex justify-center items-center">
                   <div className="flex space-x-3">
-                      <motion.div
-                        // variants={spinnerVariants}
-                        initial="initial"
-                        animate="animate"
-                        className="w-5 h-5 text-amber-500 flex justify-center items-center"
+                      <div className={`w-5 h-5 text-${group.textColor} animate-spin flex justify-center items-center`}
                       >
                         <LucideIcons.Loader2 />
-                      </motion.div>
+                      </div>
                     </div>
                   </div>
                 ) : items.length === 0 ? (
@@ -186,8 +182,9 @@ export default function MenuCategories() {
                     <p>آیتمی در این دسته‌بندی وجود ندارد.</p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <AnimatePresence>
+                      {category.name === "نیمرو" && <p className="font-bold text-left">تک‌نفره / دو نفره</p>}
                       {items.map((item, index) => (
                         <motion.div
                           key={item._id}
@@ -196,8 +193,9 @@ export default function MenuCategories() {
                           animate="visible"
                           exit="hidden"
                           transition={{ delay: index * 0.05 }}
+                          // className={`border-b-2 border-${group.textColor}`}
                         >
-                          <MenuItemCard  item={item} onClick={handleItemClick} />
+                          <MenuItemCard  item={item} onClick={handleItemClick} group={group} />
                         </motion.div>
                       ))}
                     </AnimatePresence>
@@ -216,7 +214,7 @@ export default function MenuCategories() {
               // variants={spinnerVariants}
               initial="initial"
               animate="animate"
-              className="w-5 h-5 text-amber-500 flex justify-center items-center"
+              className={`w-5 h-5 text-${group.textColor} flex justify-center items-center`}
             >
               <LucideIcons.Loader2 />
             </motion.div>
@@ -224,7 +222,7 @@ export default function MenuCategories() {
         </div>
       )}
 
-      <MenuItemModal item={selectedItem} categoryName={modalCategoryName} isOpen={isModalOpen} onClose={handleCloseModal} />
+      <MenuItemModal item={selectedItem} group={group} categoryName={modalCategoryName} isOpen={isModalOpen} onClose={handleCloseModal} />
     </div>
   );
 }

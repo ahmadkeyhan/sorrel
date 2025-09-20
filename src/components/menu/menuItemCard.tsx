@@ -17,24 +17,35 @@ interface item {
   available: boolean;
 }
 
+interface Group {
+    title: string
+    name: string
+    bgColor: string
+    textColor: string
+    subtextColor: string
+    imageSrc: string
+}
+
 export default function MenuItemCard({
   item,
+  group,
   onClick,
 }: {
   item: item;
+  group: Group
   onClick: (item: item) => void;
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
-      className={`flex items-center gap-4 p-2 rounded-lg  bg-white text-qqdarkbrown hover:shadow-md transition-shadow cursor-pointer`}
+      className={`flex items-start gap-2 rounded-[0.125rem]`}
       whileHover={{ y: -3 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       onClick={() => onClick(item)}
     >
-      <div className="relative h-20 w-20 rounded-md overflow-hidden flex-shrink-0">
+      <div className="relative h-20 w-20 rounded-[0.125rem] overflow-hidden flex-shrink-0">
         <Image
           src={item.image || "/placeholder.svg?height=80&width=80"}
           alt={item.name}
@@ -51,16 +62,19 @@ export default function MenuItemCard({
       </div>
 
       <div className="space-y-1 flex-1">
-        <div className="flex justify-between items-start">
+        <div className="flex justify-between items-start font-bold text-base">
           <div className="flex items-center gap-1">
-            <h2 className="font-bold text-base">{item.name}</h2>
+            <p>{item.name}</p>
           </div>
-          {item.price!.length === 1 && <h3 className="font-semibold">{formatCurrency(item.price![0])}</h3>}
+          {item.price && item.price!.length === 1 ? 
+            <p>{formatCurrency(item.price![0])}</p> :
+            <p>{formatCurrency(item.price![0])} / {formatCurrency(item.price![1])}</p>
+          }
         </div>
         {/* Show price list items */}
         
         {item.ingredients && (
-          <p className="text-sm">
+          <p className={`text-sm line-clamp-2 text-${group.subtextColor}`}>
             {`(${item.ingredients})`}
           </p>
         )}

@@ -93,7 +93,16 @@ const config = {
     "text-qqbrown",
     "text-qqdarkbrown",
     "text-qqorange",
-    "text-qqcream",   
+    "text-qqcream", 
+    "bg-teal-700" ,
+    "bg-amber-50",
+    "bg-amber-50/85",
+    "text-amber-50",
+    "text-teal-700",
+    "text-teal-600",
+    "border-teal-700",
+    "border-teal-600",
+    "border-amber-50"
   ],
   darkMode: "class",
 } satisfies Config
