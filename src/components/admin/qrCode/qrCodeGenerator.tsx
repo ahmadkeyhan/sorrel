@@ -236,7 +236,7 @@ export default function QRCodeGenerator() {
       <Card>
         <CardContent className="pt-6">
           <Tabs defaultValue="basic">
-            <TabsList className="mb-4 flex flex-wrap">
+            <TabsList className="mb-4 flex flex-wrap bg-amber-100 text-teal-700">
               <TabsTrigger value="basic" className="flex-grow">
                 <QrCode />
               </TabsTrigger>
@@ -248,11 +248,11 @@ export default function QRCodeGenerator() {
             <TabsContent value="basic" className="space-y-4">
               <div dir="rtl" className="grid gap-8 grid-cols-2">
                 <div className="flex flex-col gap-2 col-span-2 sm:col-span-1">
-                  <Label className="text-base text-qqdarkbrown" htmlFor="url">آدرس کیوآر</Label>
+                  <Label htmlFor="url">آدرس کیوآر</Label>
                   <RouteSelector value={url.slice(baseUrl.length - url.length)} onChange={(route) => setUrl(baseUrl + route)} />
                 </div>
                 <div className="flex flex-col gap-4 col-span-2 sm:col-span-1">
-                  <Label className="text-base text-qqdarkbrown">{`ابعاد دانلود: ${downloadSize} پیکسل`}</Label>
+                  <Label>{`ابعاد دانلود: ${downloadSize} پیکسل`}</Label>
                   <Slider
                     dir="rtl"
                     value={[downloadSize]}
@@ -263,7 +263,7 @@ export default function QRCodeGenerator() {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label className="text-base text-qqdarkbrown" htmlFor="fgColor">رنگ پیش‌زمینه</Label>
+                  <Label htmlFor="fgColor">رنگ پیش‌زمینه</Label>
                   <Input
                     id="fgColor"
                     type="color"
@@ -273,7 +273,7 @@ export default function QRCodeGenerator() {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label className="text-base text-qqdarkbrown" htmlFor="bgColor">رنگ پس‌زمینه</Label>
+                  <Label htmlFor="bgColor">رنگ پس‌زمینه</Label>
                   <Input
                     id="bgColor"
                     type="color"
@@ -300,7 +300,7 @@ export default function QRCodeGenerator() {
                     step={1}
                     onValueChange={(value) => setLogoSize(value[0])}
                   />
-                  <p className="text-base text-qqbrown">
+                  <p className="text-base text-teal-600">
                     ابعاد واقعی: {getLogoSizePixels(true)} پیکسل × {getLogoSizePixels(true)} پیکسل
                   </p>
                 </div>
@@ -314,10 +314,10 @@ export default function QRCodeGenerator() {
         <CardContent className="pt-6 flex flex-col items-center">
           <div
             ref={qrRef}
-            className="mb-6 p-4 bg-white rounded-lg shadow-sm border flex items-center justify-center"
+            className="mb-6 rounded-[0.125rem] border-2 border-teal-700 flex items-center justify-center"
             style={{
-              width: `${previewSize + 32}px`,
-              height: `${previewSize + 32}px`,
+              width: `${previewSize + 16}px`,
+              height: `${previewSize + 16}px`,
             }}
           >
             <QRCodeSVG
@@ -332,11 +332,11 @@ export default function QRCodeGenerator() {
           </div>
 
           <div className="grid grid-cols-2 gap-4 w-full">
-            <Button onClick={handleDownloadPNG} variant="outline" className="text-base text-white bg-qqteal">
+            <Button onClick={handleDownloadPNG}>
               <Download className="w-4 h-4" />
               <p dir="rtl">دانلود PNG</p>
             </Button>
-            <Button onClick={handleDownloadSVG} variant="outline" className="text-base text-white bg-qqteal">
+            <Button onClick={handleDownloadSVG}>
               <Download className="w-4 h-4" />
               <p dir="rtl">دانلود SVG</p>
             </Button>
