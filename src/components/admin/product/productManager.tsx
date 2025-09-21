@@ -36,7 +36,14 @@ import { IProduct } from "@/models/Product"
 import ImageUploader from "../imageUploader"
 import { deleteImage } from "@/lib/imageUtils"
 
-type Product = Omit<IProduct, "createdAt" | "updatedAt"> & { id: string }
+type Product = {
+  _id: string
+  name: string
+  description?: string
+  price: number
+  image: string
+  order: number
+}
 
 // type FormProduct = Omit<IProduct, "createdAt" | "updatedAt">
 
@@ -126,7 +133,7 @@ export default function ProductManager() {
   }
 
   const handleEditClick = (product: Product) => {
-    setEditingId(product.id)
+    setEditingId(product._id)
     setEditForm({ 
         name: product.name, 
         description: product.description ? product.description : "",
@@ -157,7 +164,7 @@ export default function ProductManager() {
   const handleDeleteClick = async (id: string, name: string) => {
     if (window.confirm(`از حذف "${name}" مطمئنید؟`)) {
       try {
-        const productToDelete = products.find((product) => product.id === id)
+        const productToDelete = products.find((product) => product._id === id)
         await deleteProduct(id)
         if (productToDelete?.image) {
           try {
@@ -189,8 +196,8 @@ export default function ProductManager() {
 
       try {
         // Calculate the new order of products
-        const oldIndex = products.findIndex((product) => product.id === active.id)
-        const newIndex = products.findIndex((product) => product.id === over.id)
+        const oldIndex = products.findIndex((product) => product._id === active.id)
+        const newIndex = products.findIndex((product) => product._id === over.id)
 
         // Create the new array with the updated order
         const updatedProducts = arrayMove([...products], oldIndex, newIndex)
@@ -199,7 +206,7 @@ export default function ProductManager() {
         setProducts(updatedProducts)
 
         // Get the ordered IDs from the updated array
-        const orderedIds = updatedProducts.map((product) => product.id)
+        const orderedIds = updatedProducts.map((product) => product._id)
 
         // Save the new order to the database
         await reorderProducts(orderedIds)
@@ -224,8 +231,8 @@ export default function ProductManager() {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleCreateSubmit} className="space-y-4 p-4 border border-slate-200 rounded-lg bg-white">
-        <h3 className="font-semibold text-qqteal">افزودن محصول جدید</h3>
+      <form onSubmit={handleCreateSubmit} className="space-y-4 p-4 border-2 border-teal-700 rounded-[0.125rem]">
+        <h3 className="font-extrabold text-teal-700">افزودن محصول جدید</h3>
         <div dir="rtl" className="grid gap-4 sm:grid-cols-2">
           <div>
             <Input
@@ -246,7 +253,7 @@ export default function ProductManager() {
               required
               className="w-1/3"
             />
-            <p className="w-1/3 text-sm">هزار تومان</p>
+            <p className="w-1/3 text-base text-teal-700 font-semibold">هزار تومان</p>
           </div>
           <div className="sm:col-span-2">
             <Textarea
@@ -261,7 +268,7 @@ export default function ProductManager() {
           </div>
         </div>
         <div className="flex">
-          <Button type="submit" className="bg-qqteal hover:bg-amber-600">
+          <Button type="submit">
             <Plus className="w-4 h-4" />
             افزودن محصول
           </Button>
@@ -269,10 +276,10 @@ export default function ProductManager() {
       </form>
       <div className="space-y-4">
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <SortableContext items={products.map((product) => product.id)} strategy={verticalListSortingStrategy}>
+          <SortableContext items={products.map((product) => product._id)} strategy={verticalListSortingStrategy}>
             {products.map((product) =>
-              editingId === product.id ? (
-                <Card key={product.id} className="overflow-hidden mb-3">
+              editingId === product._id ? (
+                <Card key={product._id} className="overflow-hidden mb-3">
                   <CardContent className="p-0">
                     <form onSubmit={handleUpdateSubmit} className="p-4 space-y-4">
                       <div dir="rtl" className="grid gap-4 sm:grid-cols-2">
@@ -295,7 +302,7 @@ export default function ProductManager() {
                             required
                             className="w-1/3"
                           />
-                          <p className="w-1/3 text-sm">هزار تومان</p>
+                          <p className="w-1/3 text-base font-semibold text-teal-700">هزار تومان</p>
                         </div>
                         <div className="sm:col-span-2">
                           <Textarea
@@ -310,12 +317,12 @@ export default function ProductManager() {
                         </div>
                       </div>
                       <div className="flex flex-row-reverse justify-end gap-2">
-                        <Button type="submit" size="sm" className="bg-green-500 hover:bg-green-600">
-                          <Save className="w-4 h-4 mr-2" />
+                        <Button type="submit" size="sm">
+                          <Save className="w-4 h-4" />
                           ذخیره
                         </Button>
                         <Button type="button" variant="outline" size="sm" onClick={() => setEditingId("")}>
-                          <X className="w-4 h-4 mr-2" />
+                          <X className="w-4 h-4" />
                           لغو
                         </Button>
                       </div>
@@ -324,7 +331,7 @@ export default function ProductManager() {
                 </Card>
               ) : (
                 <SortableProduct
-                  key={product.id}
+                  key={product._id}
                   product={product}
                   onEdit={handleEditClick}
                   onDelete={handleDeleteClick}
@@ -336,7 +343,7 @@ export default function ProductManager() {
         </DndContext>
         {isReordering && (
           <div className="flex justify-center py-2">
-            <p className="text-base text-amber-600">ذخیره ترتیب جدید...</p>
+            <p className="text-base text-teal-600">ذخیره ترتیب جدید ...</p>
           </div>
         )}
       </div>
