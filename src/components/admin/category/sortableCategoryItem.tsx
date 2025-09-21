@@ -55,7 +55,7 @@ export default function SortableCategoryItem({ category, sortDisabled }: Sortabl
                 }}
                 disabled={sortDisabled}
               >
-                <GripVertical className="w-5 h-5" />
+                <GripVertical className="w-5 h-5 text-amber-500" />
                 <span className="sr-only">Drag to reorder</span>
               </Button>
               <div className="flex flex-col gap-1">
