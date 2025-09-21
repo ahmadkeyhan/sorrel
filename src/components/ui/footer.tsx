@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const navItems = [
     { name: "منو", href: "/menu", icon: 'Quote' },
-    { name: "فروشگاه", href: "/shop", icon: 'HeartHandshake' },
+    { name: "مارکت", href: "/market", icon: 'HeartHandshake' },
   ];
 
 export default function Footer() {

@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 const urls = [
     // { name: "خانه", url: "" },
     { name: "منو", url: "/menu" },
-    { name: "فروشگاه", url: "/shop" }
+    { name: "مارکت", url: "/market" }
 ]
 
 interface RouteSelector {

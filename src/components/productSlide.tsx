@@ -19,7 +19,7 @@ export default function ProductSlide({ product }: ProductSlideProps) {
       }
 
   return (
-    <Link href={`/shop`}>
+    <Link href={`/market`}>
         <div className="relative w-full h-full">
         {/* Product image */}
         <div className="relative h-1/2">

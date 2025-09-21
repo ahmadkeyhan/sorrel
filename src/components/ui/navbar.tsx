@@ -14,7 +14,7 @@ import * as LucideIcons from 'lucide-react';
 const navItems = [
   { name: "خانه", href: "/", icon: 'House' },
   { name: "منو", href: "/menu", icon: 'BookOpenText' },
-  { name: "فروشگاه", href: "/shop", icon: 'ShoppingBag' },
+  { name: "مارکت", href: "/market", icon: 'ShoppingBag' },
 ];
 
 export function Navbar() {
