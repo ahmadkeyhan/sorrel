@@ -57,18 +57,18 @@ export default function LoginPage() {
       <Card className="w-full max-w-md text-qqdarkbrown">
         <CardHeader className="space-y-1 flex flex-col items-center">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-9">
+            <div className="w-12">
               <Image
-                src={"/qqLogo.png"}
-                alt="لوگوی قوشاقاف"
-                width={173}
-                height={121}
+                src={"/logo.png"}
+                alt="لوگوی سورل"
+                width={913}
+                height={789}
                 />
             </div>
-            <h1 className="text-2xl font-bold text-qqteal">کافه قوشاقاف</h1>
+            <CardTitle className="text-xl text-teal-700">ورود به پنل</CardTitle>
           </div>
-          <CardTitle className="text-xl text-qqdarkbrown">ورود به پنل</CardTitle>
-          <CardDescription className="text-center w-[31ch]">برای دسترسی به داشبورد مدیریت، نام کاربری و رمز عبور خود را وارد کنید.</CardDescription>
+          
+          <CardDescription className="text-center w-[31ch] text-teal-600">برای دسترسی به داشبورد مدیریت، نام کاربری و رمز عبور خود را وارد کنید.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -94,7 +94,7 @@ export default function LoginPage() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full bg-qqteal hover:bg-amber-600" disabled={isLoading}>
+            <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "در حال ورود..." : "ورود"}
             </Button>
           </form>
