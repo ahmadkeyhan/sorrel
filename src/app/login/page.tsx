@@ -54,7 +54,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-amber-50 to-white p-4">
-      <Card className="w-full max-w-md text-qqdarkbrown">
+      <Card className="w-full max-w-md text-teal-700">
         <CardHeader className="space-y-1 flex flex-col items-center">
           <div className="flex items-center gap-2 mb-2">
             <div className="w-12">

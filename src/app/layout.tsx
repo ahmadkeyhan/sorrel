@@ -33,14 +33,14 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: "QQ Cafe",
-  description: "وبسایت کافه‌رستری و فضای اشتراکی قوشاقاف",
+  title: "Sorrel Cafe",
+  description: "وبسایت کافه‌رستوران سورل",
   manifest: "/manifest.json",
   // themeColor: "#F59E0B",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "QQ Cafe",
+    title: "Sorrel Cafe",
   },
 }
 
@@ -54,9 +54,9 @@ export default function RootLayout({
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="QQ Cafe" />
+        <meta name="apple-mobile-web-app-title" content="Sorrel Cafe" />
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
-        <link rel="icon" href="/qqicon.ico" sizes="any" />
+        <link rel="icon" href="/logo.ico" sizes="any" />
       </head>
       <body className="bg-amber-50">
         <Providers>

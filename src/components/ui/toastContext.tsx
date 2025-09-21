@@ -85,17 +85,17 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
   }, [onClose])
 
   const bgColor = {
-    default: "bg-white",
-    success: "bg-green-50 border-green-200",
+    default: "bg-amber-50",
+    success: "bg-amber-50 border-green-200",
     error: "bg-red-50 border-red-200",
     warning: "bg-amber-50 border-amber-200",
     info: "bg-blue-50 border-blue-200",
   }
 
   const textColor = {
-    default: "text-qqdarkbrown",
-    success: "text-qqteal",
-    error: "text-qqorange",
+    default: "text-teal-700",
+    success: "text-teal-700",
+    error: "text-amber-500",
     warning: "text-amber-800",
     info: "text-blue-800",
   }
@@ -103,7 +103,7 @@ function ToastItem({ toast, onClose }: { toast: Toast; onClose: () => void }) {
   return (
     <div
       className={cn(
-        "rounded-lg shadow-md border p-4 transform transition-all duration-300 ease-in-out",
+        "rounded-[0.125rem] border-2 border-teal-700 p-4 transform transition-all duration-300 ease-in-out",
         bgColor[toast.type],
         "animate-in slide-in-from-right",
       )}
