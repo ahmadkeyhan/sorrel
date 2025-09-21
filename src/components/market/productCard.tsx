@@ -18,9 +18,9 @@ export default function ProductCard({product}: {product:IProduct}) {
                 />
             </div>
             <CardContent className="flex flex-col p-4 gap-4">
-                <h2 className="text-xl font-bold text-qqteal">{product.name}</h2>
-                <p className="text-qqbrown">{product.description}</p>
-                <Button variant="outline" className="border-qqteal text-qqteal">
+                <h2 className="text-xl font-extrabold text-teal-700">{product.name}</h2>
+                <p className="text-semibold text-teal-600">{product.description}</p>
+                <Button variant="outline" className="text-teal-700 font-semibold">
                     <p>{formatCurrency(product.price)} هزار تومان</p>
                 </Button>
             </CardContent>

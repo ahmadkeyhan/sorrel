@@ -10,12 +10,12 @@ export default function Roastery() {
     <main className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
       <div className="container px-4 py-6 mx-auto max-w-5xl">
         <section className="space-y-2 mb-8">
-          <div className="flex justify-center items-center text-qqteal gap-2 mb-2">
+          <div className="flex justify-center items-center text-teal-700 gap-2 mb-2">
             <ShoppingBag className="w-8 h-8" />
-            <h1 className="text-3xl font-bold text-qqteal">سورل مارکت</h1>
+            <h1 className="text-3xl font-black">سورل مارکت</h1>
           </div>
-          <p className="text-qqbrown w-[30ch] md:w-full mx-auto max-w-2xl text-center">
-            برای خرید محصولات به کافه مراجعه کنید.
+          <p className="text-amber-500 text-base font-semibold md:w-full mx-auto max-w-2xl text-center">
+            برای خرید محصولات حضوری مراجعه کنید.
           </p>
         </section>
         <Suspense fallback={<MenuSkeleton />}>
@@ -33,22 +33,14 @@ const spinnerVariants = {
     transition: {
       repeat: Number.POSITIVE_INFINITY,
       duration: 1,
-      ease: "linear",
     },
   },
 }
 
 function MenuSkeleton() {
   return (
-    <AnimatePresence>
-      <motion.div
-        // variants={spinnerVariants}
-        initial="initial"
-        animate="animate"
-        className="w-3 h-3 rounded-full"
-      >
+      <div className="animate-spin w-6 h-6">
         <Loader2 />
-      </motion.div>
-    </AnimatePresence>
+      </div>
   )
 }
