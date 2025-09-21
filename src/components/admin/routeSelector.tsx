@@ -10,8 +10,7 @@ import { cn } from "@/lib/utils"
 const urls = [
     // { name: "خانه", url: "" },
     { name: "منو", url: "/menu" },
-    { name: "فروشگاه", url: "/shop" },
-    { name: "رویدادها", url: "/events" }
+    { name: "فروشگاه", url: "/shop" }
 ]
 
 interface RouteSelector {
@@ -47,7 +46,7 @@ export default function RouteSelector({ value, onChange }: RouteSelector) {
                 <span>{selectedUrl}</span>
               </>
             ) : (
-              "انتخاب لینک(اختیاری)"
+              "انتخاب لینک"
             )}
           </div>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
