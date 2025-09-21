@@ -146,8 +146,8 @@ export default function UserManager() {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleCreateSubmit} className="space-y-4 p-4 border border-slate-200 rounded-lg bg-white">
-        <h3 className="font-medium">
+      <form onSubmit={handleCreateSubmit} className="space-y-4 p-4 border-2 border-teal-700">
+        <h3 className="font-extrabold text-teal-700">
           افزودن کارمند جدید
         </h3>
         <div dir="rtl" className="grid gap-4 sm:grid-cols-2">
@@ -170,17 +170,17 @@ export default function UserManager() {
           </div>
         </div>
         <div className="flex">
-          <Button type="submit" className="bg-qqteal hover:bg-amber-600">
-            <Plus className="w-4 h-4 mr-2" />
+          <Button type="submit">
+            <Plus className="w-4 h-4" />
             افزودن کارمند
           </Button>
         </div>
       </form>
 
       <div className="space-y-2">
-        <h3 className="font-medium text-slate-700">لیست کارمندان</h3>
+        <h3 className="font-extrabold px-4 text-teal-700">لیست کارمندان</h3>
         {users.length === 0 ? (
-          <div className="text-center py-8 text-slate-500">
+          <div className="text-center py-8 text-teal-600">
             <p>کارمندی ثبت نشده‌است.</p>
           </div>
         ) : (
@@ -208,12 +208,12 @@ export default function UserManager() {
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Button type="submit" size="sm" className="bg-green-500 hover:bg-green-600">
-                        <Save className="w-4 h-4 mr-2" />
+                      <Button type="submit" size="sm">
+                        <Save className="w-4 h-4" />
                         ذخیره
                       </Button>
                       <Button type="button" variant="outline" size="sm" onClick={() => setEditingId(null)}>
-                        <X className="w-4 h-4 mr-2" />
+                        <X className="w-4 h-4" />
                         لغو
                       </Button>
                     </div>
@@ -223,22 +223,27 @@ export default function UserManager() {
             ) : (
               <Card key={user.id} className="overflow-hidden mb-3">
                 <CardContent className="p-0">
-                  <div className="p-4 flex flex-row-reverse justify-between items-center">
+                  <div className="pl-2 p-3 flex flex-row-reverse justify-between items-center text-teal-700">
                     <div>
-                      <h3 className="font-medium">{user.name}</h3>
+                      <h3 className="font-extrabold">{user.name}</h3>
                     </div>
                     <div className="flex flex-row-reverse gap-2">
-                      <Button variant="ghost" size="sm" onClick={() => handleEditClick(user)}>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => handleEditClick(user)}
+                        className="text-teal-700 hover:bg-teal-700 hover:text-amber-50"
+                      >
                         <Edit className="w-4 h-4" />
                         <span className="sr-only">Edit</span>
                       </Button>
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="sm"
                         onClick={() => handleDeleteClick(user.id, user.name)}
-                        className="text-red-500 hover:text-red-700"
+                        className="group border-amber-500 hover:bg-amber-500 hover:border-amber-500"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-4 h-4 text-amber-500 group-hover:text-amber-50" />
                         <span className="sr-only">Delete</span>
                       </Button>
                     </div>

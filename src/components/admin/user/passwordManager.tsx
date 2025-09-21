@@ -73,8 +73,8 @@ export default function PasswordManager() {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleSubmit} className="space-y-4 p-4 border border-slate-200 rounded-lg bg-white">
-          <h3 className="font-medium">تغییر کلمه‌ی عبور</h3>
+      <form onSubmit={handleSubmit} className="space-y-4 p-4 border-2 border-teal-700">
+          <h3 className="font-extrabold text-teal-700">تغییر کلمه‌ی عبور</h3>
           <div dir="rtl" className="grid gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2 flex flex-col gap-4">
               <Label htmlFor="current-password">کلمه‌ی عبور فعلی</Label>
@@ -108,7 +108,7 @@ export default function PasswordManager() {
             </div>
           </div>
           <div className="flex">
-            <Button type="submit" className="bg-qqteal" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading}>
               {isLoading ? "در حال به‌روزرسانی" : "به‌روزرسانی کلمه‌ی عبور"}
             </Button>
           </div>
