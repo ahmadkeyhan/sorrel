@@ -132,7 +132,15 @@ export default function Home() {
                     <section className="grid lg:grid-cols-2 gap-2">
                         {groups.map((group) => {
                             return (
-                                <div key={group.title} className={`flex animate-pulse justify-center items-center w-full border-2 border-teal-700 rounded-[0.125rem] aspect-[4/1] sm:aspect-[6/1] bg-${group.bgColor} text-${group.textColor}`}>
+                                <div key={group.title} className={`relative overflow-hidden flex animate-pulse justify-center items-center w-full border-2 border-teal-700 rounded-[0.125rem] aspect-[4/1] sm:aspect-[6/1] bg-${group.bgColor} text-${group.textColor}`}>
+                                    <div className="absolute w-full opacity-30">
+                                        <Image
+                                            src={group.imageSrc}
+                                            alt="لوگوی سورل"
+                                            width={1080}
+                                            height={1080}
+                                        />
+                                    </div>
                                     <h2 className="font-black text-xl sm:text-3xl">{group.title}</h2>
                                 </div>
                             )
@@ -179,7 +187,7 @@ export default function Home() {
            <main className={`min-h-screen bg-${group? group.bgColor : "amber-50"}`}>
                 <div className="container p-2 mx-auto max-w-3xl">
                     <section className="space-y-2 relative">
-                        <div className={`flex justify-center sticky overflow-hidden top-16 z-10 items-center gap-4 w-full border-2 border-${group.textColor} rounded-[0.125rem] aspect-[4/1] sm:aspect-[6/1] bg-${group.bgColor} text-${group.textColor}`}>
+                        <div className={`flex justify-center sticky overflow-hidden top-[72px] z-10 items-center gap-4 w-full border-2 border-${group.textColor} rounded-[0.125rem] aspect-[4/1] sm:aspect-[6/1] bg-${group.bgColor} text-${group.textColor}`}>
                             <div className="absolute w-full opacity-30">
                                 <Image
                                     src={group.imageSrc}
