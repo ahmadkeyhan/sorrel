@@ -52,7 +52,7 @@ export default async function Home() {
           <p className="text-amber-500 text-center text-lg">برای خرید محصولات حضوری مراجعه کنید.</p>
           <Slideshow className="h-96 bg-amber-50">
             {latestProducts.map((product) => (
-              <ProductSlide key={product.id} product={product} />
+              <ProductSlide key={product._id} product={product} />
             ))}
           </Slideshow>
         </AnimatedSection>) : null}
