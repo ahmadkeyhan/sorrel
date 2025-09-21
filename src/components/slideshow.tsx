@@ -57,7 +57,7 @@ export default function Slideshow({ children, autoplayInterval = 5000, className
 
   return (
     <div
-      className={`relative overflow-hidden rounded-3xl ${className}`}
+      className={`relative overflow-hidden rounded-[0.125rem] border-2 border-teal-700 ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -82,7 +82,7 @@ export default function Slideshow({ children, autoplayInterval = 5000, className
               key={index}
               onClick={() => setCurrentIndex(index)}
               className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex ? "bg-qqorange w-4" : "bg-qqcream"
+                index === currentIndex ? "bg-amber-500 w-4" : "bg-amber-200"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -96,7 +96,7 @@ export default function Slideshow({ children, autoplayInterval = 5000, className
           <Button
             variant="ghost"
             size="icon"
-            className="absolute left-2 bottom-2 bg-qqorange hover:bg-qqorange/50 text-white hover:text-qqdarkbrown rounded-full p-1"
+            className="absolute left-2 bottom-2 border-2 border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-amber-50 rounded-[0.125rem] p-1"
             onClick={nextSlide}
             aria-label="Previous slide"
           >
@@ -105,7 +105,7 @@ export default function Slideshow({ children, autoplayInterval = 5000, className
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-2 bottom-2 bg-qqorange hover:bg-qqorange/50 text-white hover:text-qqdarkbrown rounded-full p-1"
+            className="absolute right-2 bottom-2 border-2 border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-amber-50 rounded-[0.125rem] p-1"
             onClick={prevSlide}
             aria-label="Next slide"
           >

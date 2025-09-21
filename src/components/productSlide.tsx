@@ -33,13 +33,13 @@ export default function ProductSlide({ product }: ProductSlideProps) {
         </div>
 
         {/* Product details */}
-        <div className=" px-6 py-4 text-qqteal">
+        <div className=" px-6 py-4 text-teal-700">
             <div className="w-full flex items-center justify-between">
-                <h3 className="text-xl font-bold">{product.name}</h3>
+                <h3 className="text-xl font-extrabold">{product.name}</h3>
             </div>
-            <p className="mb-2 line-clamp-2 min-h-12 text-qqdarkbrown">{product.description}</p>
+            <p className="mb-2 line-clamp-2 font-semibold min-h-12 text-teal-600">{product.description}</p>
             <div className="flex w-full justify-center">
-                <Button variant="outline" className="border-qqteal text-qqteal">
+                <Button variant="outline">
                     <p>{formatCurrency(product.price)} هزار تومان</p>
                 </Button>
             </div>
