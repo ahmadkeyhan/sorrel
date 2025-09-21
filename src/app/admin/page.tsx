@@ -35,13 +35,13 @@ export default function AdminPage() {
   const isEmployee = session?.user?.role === "employee";
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
-      <div className="container px-4 py-6 mx-auto max-w-6xl">
+    <main className="min-h-screen bg-amber-50">
+      <div className="container p-4 mx-auto max-w-6xl">
         <Tabs
           defaultValue={isEmployee? "items" : "categories"}
-          className="w-full flex flex-col lg:flex-row-reverse gap-6"
+          className="w-full flex flex-col lg:flex-row-reverse gap-4"
         >
-          <TabsList className="flex flex-wrap lg:flex-col lg:justify-start h-auto w-full lg:w-48 bg-amber-100 text-qqdarkbrown p-1 lg:p-2 lg:shrink-0 rounded-lg">
+          <TabsList className="flex flex-wrap lg:flex-col lg:justify-start h-auto w-full lg:w-48 bg-amber-100 text-teal-700 p-1 lg:p-2 lg:shrink-0">
             <TabsTrigger
               value="categories"
               className="flex-grow px-2 lg:flex-grow-0 lg:justify-end lg:w-full lg:mb-1"
@@ -86,7 +86,7 @@ export default function AdminPage() {
                 value="categories"
                 className="space-y-6 data-[state=active]:block"
               >
-                <h1 className="text-xl font-bold text-qqdarkbrown text-center lg:text-end ">
+                <h1 className="text-xl font-black text-teal-700 text-center lg:text-end ">
                   مدیریت دسته‌بندی‌ها
                 </h1>
                 <Suspense fallback={<CategoriesSkeleton />}>
@@ -99,7 +99,7 @@ export default function AdminPage() {
               value="items"
               className="space-y-6 data-[state=active]:block"
             >
-              <h1 className="text-xl font-bold text-qqdarkbrown text-center lg:text-end ">
+              <h1 className="text-xl font-black text-teal-700 text-center lg:text-end ">
                 مدیریت آیتم‌ها
               </h1>
               <Suspense fallback={<ItemsSkeleton />}>
@@ -112,7 +112,7 @@ export default function AdminPage() {
                 value="products"
                 className="space-y-6 data-[state=active]:block"
               >
-                <h1 className="text-xl font-bold text-qqdarkbrown text-center lg:text-end ">
+                <h1 className="text-xl font-black text-teal-700 text-center lg:text-end ">
                   مدیریت محصولات
                 </h1>
                 <Suspense fallback={<ProductSkeleton />}>
@@ -126,7 +126,7 @@ export default function AdminPage() {
                 value="users"
                 className="space-y-6 data-[state=active]:block"
               >
-                <h1 className="text-xl font-bold text-qqdarkbrown text-center lg:text-end ">
+                <h1 className="text-xl font-black text-teal-700 text-center lg:text-end ">
                   مدیریت اکانت‌ها
                 </h1>
                 <Suspense fallback={<UsersSkeleton />}>
@@ -141,7 +141,7 @@ export default function AdminPage() {
                 value="qr"
                 className="space-y-6 data-[state=active]:block"
               >
-                <h1 className="text-xl font-bold text-qqdarkbrown text-center lg:text-end ">
+                <h1 className="text-xl font-black text-teal-700 text-center lg:text-end ">
                   ایجاد کد کیوآر
                 </h1>
                 <Suspense fallback={<QRCodeSkeleton />}>
@@ -180,7 +180,7 @@ function ItemsSkeleton() {
         {Array(4)
           .fill(0)
           .map((_, i) => (
-            <Skeleton key={i} className="h-24 w-full rounded-lg" />
+            <Skeleton key={i} className="h-24 w-full rounded-[0.125rem]" />
           ))}
       </div>
     </div>
@@ -195,7 +195,7 @@ function CategoriesSkeleton() {
         {Array(3)
           .fill(0)
           .map((_, i) => (
-            <Skeleton key={i} className="h-16 w-full rounded-lg" />
+            <Skeleton key={i} className="h-16 w-full rounded-[0.125rem]" />
           ))}
       </div>
     </div>
@@ -206,7 +206,7 @@ function ProductSkeleton() {
   return (
     <div className="space-y-4">
       <Skeleton className="h-10 w-full max-w-md" />
-      <Skeleton className="h-40 w-full rounded-lg" />
+      <Skeleton className="h-40 w-full rounded-[0.125rem]" />
     </div>
   );
 }
@@ -219,7 +219,7 @@ function UsersSkeleton() {
         {Array(3)
           .fill(0)
           .map((_, i) => (
-            <Skeleton key={i} className="h-16 w-full rounded-lg" />
+            <Skeleton key={i} className="h-16 w-full rounded-[0.125rem]" />
           ))}
       </div>
     </div>
@@ -229,8 +229,8 @@ function UsersSkeleton() {
 function QRCodeSkeleton() {
   return (
     <div className="grid gap-6 md:grid-cols-2">
-      <Skeleton className="h-[400px] rounded-lg" />
-      <Skeleton className="h-[400px] rounded-lg" />
+      <Skeleton className="h-[400px] rounded-[0.125rem]" />
+      <Skeleton className="h-[400px] rounded-[0.125rem]" />
     </div>
   );
 }

@@ -39,8 +39,8 @@ export default function SortableCategoryItem({ category, sortDisabled }: Sortabl
     <div ref={setNodeRef} style={style} className="mb-3 touch-manipulation">
       <Card className={`overflow-hidden ${isDragging ? "shadow-lg" : ""}`}>
         <CardContent className="p-0">
-          <div className="p-3 flex flex-row-reverse justify-between items-center bg-white text-qqdarkbrown">
-            <div className="flex flex-row-reverse items-center gap-3">
+          <div className="px-2 py-3 flex flex-row-reverse justify-between items-center text-teal-700">
+            <div className="flex flex-row-reverse items-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
@@ -60,8 +60,7 @@ export default function SortableCategoryItem({ category, sortDisabled }: Sortabl
               </Button>
               <div className="flex flex-col gap-1">
                 <div className="flex flex-row-reverse gap-2">
-                  {/* {IconComponent && <IconComponent className="w-5 h-5" />} */}
-                  <h3 className="font-medium">{category.name}</h3>
+                  <h3 className="font-extrabold">{category.name}</h3>
                 </div>
               </div>
             </div>

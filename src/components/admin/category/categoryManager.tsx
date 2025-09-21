@@ -264,8 +264,8 @@ export default function CategoryManager() {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleCreateSubmit} className="space-y-4 p-4 border border-slate-200 rounded-lg bg-white">
-        <h3 className="font-medium">افزودن دسته‌بندی جدید</h3>
+      <form onSubmit={handleCreateSubmit} className="space-y-4 p-4 border-2 border-teal-700 rounded-[0.125rem]">
+        <h3 className="font-extrabold text-teal-700">افزودن دسته‌بندی جدید</h3>
         <div dir="rtl" className="grid gap-4 sm:grid-cols-2">
           <div>
             <Input
@@ -295,7 +295,7 @@ export default function CategoryManager() {
           </div>
         </div>
         <div className="flex">
-          <Button type="submit" className="bg-qqteal hover:bg-amber-600">
+          <Button type="submit">
             <Plus className="w-4 h-4" />
             افزودن دسته‌بندی
           </Button>
@@ -307,25 +307,26 @@ export default function CategoryManager() {
           return (
             <Card key={group} className="overflow-hidden">
               <CardHeader className="py-3 px-4 cursor-pointer">
-                <div className="flex flex-row-reverse justify-between items-center text-qqdarkbrown">
-                  <CardTitle className="text-lg flex items-center">
+                <div className="flex flex-row-reverse justify-between items-center text-teal-700">
+                  <CardTitle className="text-lg font-extrabold flex items-center">
                     <h2>{group}</h2>
                   </CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="pt-0 pb-3 px-3">
                 {groupCategories.length === 0 ? (
-                  <div className="text-center py-4 text-qqbrown">
-                    <h3>دسته‌بندی‌ای در این گروه موجود نیست.</h3>
+                  <div className="text-center py-4 text-teal-600">
+                    <p>دسته‌بندی‌ای در این گروه موجود نیست.</p>
                   </div>
                 ) : (
                   <div className="space-y-2">
-                    <div className="flex flex-row-reverse justify-between items-center mb-2 text-base text-qqbrown">
+                    <div className="flex flex-row-reverse justify-between items-center mb-2 text-base text-amber-500">
                       {isReordering === group ? (
                         <Button
                           variant="outline"
                           size="sm"
                           onClick={() => setIsReordering(null)}
+                          className="border-amber-500"
                         >
                           <X className="w-4 h-4" />
                           انصراف
@@ -336,6 +337,7 @@ export default function CategoryManager() {
                           size="sm"
                           onClick={() => setIsReordering(group)}
                           disabled={isReordering !== null}
+                          className="border-amber-500"
                         >
                           <LucideListStart className="h-5 w-5" />
                           <p>تغییر ترتیب گروه</p>
@@ -394,12 +396,12 @@ export default function CategoryManager() {
                                     </div>
                                   </div>
                                   <div className="flex gap-2">
-                                    <Button type="submit" size="sm" className="bg-green-500 hover:bg-green-600">
-                                      <Save className="w-4 h-4 mr-2" />
+                                    <Button type="submit" size="sm">
+                                      <Save className="w-4 h-4" />
                                       ذخیره
                                     </Button>
                                     <Button type="button" variant="outline" size="sm" onClick={() => setEditingId("")}>
-                                      <X className="w-4 h-4 mr-2" />
+                                      <X className="w-4 h-4" />
                                       لغو
                                     </Button>
                                   </div>
@@ -409,14 +411,14 @@ export default function CategoryManager() {
                           ); else return (
                             <Card key={category._id} className="overflow-hidden">
                               <CardContent className="p-0">
-                                <div className="p-4 flex flex-row-reverse gap-4 items-center">
+                                <div className="p-3 flex flex-row-reverse gap-4 items-center">
                                   <div className="flex flex-row-reverse w-full justify-between items-center">
-                                    <h3 className="font-medium text-qqdarkbrown">{category.name}</h3>
+                                    <h3 className="font-extrabold text-teal-700">{category.name}</h3>
                                     <div className="flex flex-row-reverse justify-end gap-2">
                                         <Button 
                                           variant="outline" 
                                           size="sm" 
-                                          className=" hover:bg-white"
+                                          className="text-teal-700 hover:bg-teal-700 hover:text-amber-50"
                                           onClick={() => handleEditClick(category)}>
                                           <Edit className="w-4 h-4" />
                                           <span className="sr-only">ویرایش</span>
@@ -424,8 +426,8 @@ export default function CategoryManager() {
                                         <Button 
                                           variant="outline" 
                                           size="sm" 
-                                          className="group  hover:bg-red-500" onClick={() => handleDeleteClick(category._id, category.name)}>
-                                          <Trash2 className="w-4 h-4 text-red-500 group-hover:text-red-50" />
+                                          className="group  hover:bg-amber-500 hover:border-amber-500" onClick={() => handleDeleteClick(category._id, category.name)}>
+                                          <Trash2 className="w-4 h-4 text-amber-500 group-hover:text-amber-50" />
                                           <span className="sr-only">حذف</span>
                                         </Button>
                                     </div>
