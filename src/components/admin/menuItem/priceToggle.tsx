@@ -31,7 +31,7 @@ export default function PriceToggle({ initialPrice, onToggle }: PriceToggleProps
   return (
     <div dir="rtl" className="flex flex-col items-center gap-2">
       <Switch id="singlePrice" checked={singlePrice} onCheckedChange={handleToggle} disabled={isUpdating} />
-      <Label htmlFor="singlePrice" className={isUpdating ? "opacity-50" : ""}>
+      <Label htmlFor="singlePrice" className={isUpdating ? "opacity-50 text-teal-700 font-semibold" : "text-teal-700 font-semibold"}>
         {singlePrice ? "تک قیمت" : "چند قیمت"}
       </Label>
     </div>

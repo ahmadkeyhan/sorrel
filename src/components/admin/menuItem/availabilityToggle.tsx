@@ -47,7 +47,7 @@ export default function AvailabilityToggle({ itemId, itemName, item, initialAvai
   return (
     <div dir="rtl" className="flex flex-col items-center gap-2">
       <Switch id={`available-${itemId}`} checked={available} onCheckedChange={handleToggle} disabled={isUpdating} />
-      <Label htmlFor={`available-${itemId}`} className={isUpdating ? "opacity-50" : ""}>
+      <Label htmlFor={`available-${itemId}`} className={isUpdating ? "opacity-50 text-teal-700 font-semibold" : " text-teal-700 font-semibold"}>
         {available ? "موجود" : "ناموجود"}
       </Label>
     </div>

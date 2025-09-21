@@ -124,7 +124,7 @@ export default function ImageUploader({ value, onChange, className = "" }: Image
           type="button" 
           variant="outline" 
           size="sm" 
-          className="flex flex-row-reverse gap-2"
+          className="text-teal-700"
           onClick={triggerFileInput} 
           disabled={isUploading}>
           {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
@@ -138,7 +138,7 @@ export default function ImageUploader({ value, onChange, className = "" }: Image
             size="sm"
             onClick={handleRemoveImage}
             disabled={isUploading}
-            className="flex gap-2 text-red-500 hover:text-red-700"
+            className="border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white"
           >
             <X className="h-4 w-4" />
             حذف
@@ -149,7 +149,7 @@ export default function ImageUploader({ value, onChange, className = "" }: Image
       </div>
 
       {displayUrl && (
-        <div className="relative h-40 w-40 rounded-md overflow-hidden border border-gray-200">
+        <div className="relative h-40 w-40 rounded-[0.125rem] overflow-hidden">
           <Image src={displayUrl || "/placeholder.svg"} alt="Item preview" fill className="object-cover" />
         </div>
       )}

@@ -426,7 +426,7 @@ export default function CategoryManager() {
                                         <Button 
                                           variant="outline" 
                                           size="sm" 
-                                          className="group  hover:bg-amber-500 hover:border-amber-500" onClick={() => handleDeleteClick(category._id, category.name)}>
+                                          className="group border-amber-500 hover:bg-amber-500 hover:border-amber-500" onClick={() => handleDeleteClick(category._id, category.name)}>
                                           <Trash2 className="w-4 h-4 text-amber-500 group-hover:text-amber-50" />
                                           <span className="sr-only">حذف</span>
                                         </Button>

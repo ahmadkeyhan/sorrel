@@ -54,7 +54,7 @@ export default function SortableMenuItem({ item }: SortableMenuItemProps) {
     <div ref={setNodeRef} style={style} className="mb-3 touch-manipulation">
       <Card className={`overflow-hidden ${isDragging ? "shadow-lg" : ""}`}>
         <CardContent className="p-0">
-          <div className="p-3 flex flex-row-reverse gap-3">
+          <div className="px-2 py-3 flex flex-row-reverse gap-2">
             <Button
               variant="ghost"
               size="sm"
@@ -67,14 +67,14 @@ export default function SortableMenuItem({ item }: SortableMenuItemProps) {
                 e.stopPropagation()
               }}
             >
-              <GripVertical className="w-5 h-5 text-qqcream" />
+              <GripVertical className="w-5 h-5 text-amber-500" />
               <span className="sr-only">Drag to reorder</span>
             </Button>
 
 
             <div className="flex-1">
-              <div className="flex flex-row-reverse gap-1 items-center text-qqdarkbrown">
-                <h3 className="font-medium">{item.name}</h3>
+              <div className="flex flex-row-reverse gap-1 items-center text-teal-700">
+                <p className="font-semibold">{item.name}</p>
               </div>
             </div>
           </div>

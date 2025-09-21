@@ -360,9 +360,9 @@ export default function MenuItemManager({ isAdmin = true }) {
   return (
     <div className="space-y-6">
       {isAdmin && (
-        <form onSubmit={handleCreateSubmit} className="space-y-4 p-4 border border-slate-200 rounded-lg bg-white">
-          <div dir="rtl" className="flex justify-between items-center">
-            <h3 className="font-semibold text-qqteal">افزودن آیتم‌ جدید</h3>
+        <form onSubmit={handleCreateSubmit} className="space-y-4 p-4 border-2 border-teal-700 rounded-[0.125rem]">
+          <div dir="rtl" className="flex justify-between items-center pl-2">
+            <h3 className="font-extrabold text-teal-700">افزودن آیتم‌ جدید</h3>
             <PriceToggle initialPrice={true} onToggle={(checked) => setNewItemSinglePrice(checked)} />
           </div>
           <div dir="rtl" className="grid gap-4 sm:grid-cols-2">
@@ -435,7 +435,7 @@ export default function MenuItemManager({ isAdmin = true }) {
             </div>
           </div>
           <div className="flex">
-            <Button type="submit" className="bg-qqteal hover:bg-amber-600 ">
+            <Button type="submit">
               <Plus className="w-4 h-4" />
               افزودن آیتم به منو
             </Button>
@@ -446,7 +446,7 @@ export default function MenuItemManager({ isAdmin = true }) {
       <div className="space-y-4">
         {/* {items.map((item) => ( */}
         {categories.length === 0 ? (
-          <div className="text-center py-8 text-qqbrown">
+          <div className="text-center py-8 text-teal-600">
             <h3>دسته‌بندی‌ای موجود نیست! ابتدا یک دسته‌بندی ایجاد کنید.</h3>
           </div>
         ) : (
@@ -457,8 +457,8 @@ export default function MenuItemManager({ isAdmin = true }) {
             return (
               <Card key={category._id} className="overflow-hidden">
                 <CardHeader className="py-3 px-4 cursor-pointer" onClick={() => toggleCategory(category._id)}>
-                  <div className="flex flex-row-reverse justify-between items-center text-qqdarkbrown">
-                    <CardTitle className="text-lg flex items-center">
+                  <div className="flex flex-row-reverse justify-between items-center text-teal-700">
+                    <CardTitle className="text-lg font-extrabold flex items-center">
                       <h2>{category.name}</h2>
                     </CardTitle>
                     <Button variant="ghost" size="sm" className="p-0 h-8 w-8">
@@ -470,18 +470,19 @@ export default function MenuItemManager({ isAdmin = true }) {
                 {isExpanded && (
                   <CardContent className="pt-0 pb-3 px-3">
                     {categoryItems.length === 0 ? (
-                      <div className="text-center py-4 text-qqbrown">
+                      <div className="text-center py-4 text-teal-600">
                         <h3>آیتمی در این دسته‌بندی موجود نیست.</h3>
                       </div>
                     ) : (
                       <div className="space-y-2">
                         {isAdmin && (
-                          <div className="flex flex-row-reverse justify-between items-center mb-2 text-base text-qqbrown">
+                          <div className="flex flex-row-reverse justify-between items-center mb-2 text-base text-amber-500">
                             {isReordering === category._id ? (
                               <Button
                                 variant="outline"
                                 size="sm"
                                 onClick={() => setIsReordering(null)}
+                                className="border-amber-500"
                               >
                                 <X className="w-4 h-4" />
                                 انصراف
@@ -492,6 +493,7 @@ export default function MenuItemManager({ isAdmin = true }) {
                                 size="sm"
                                 onClick={() => setIsReordering(category._id)}
                                 disabled={isReordering !== null}
+                                className="border-amber-500"
                               >
                                 <LucideListStart className="h-5 w-5" />
                                 <p>تغییر ترتیب لیست</p>
@@ -597,7 +599,7 @@ export default function MenuItemManager({ isAdmin = true }) {
                                         </div>
                                       </div>
                                       <div className="flex flex-row-reverse justify-end gap-2">
-                                        <Button type="submit" size="sm" className="bg-green-500 hover:bg-green-600">
+                                        <Button type="submit" size="sm">
                                           <Save className="w-4 h-4" />
                                           ذخیره
                                         </Button>
@@ -612,15 +614,15 @@ export default function MenuItemManager({ isAdmin = true }) {
                               ); else return (
                                 <Card key={item._id} className="overflow-hidden">
                                   <CardContent className="p-0">
-                                    <div className="p-4 flex flex-row-reverse gap-4 items-center">
+                                    <div className="p-4 flex flex-row-reverse gap-2 items-center">
                                       <div className="flex flex-col justify-between items-center gap-2">
                                         {item.image ? (
-                                          <div className="relative h-20 w-20 rounded-md overflow-hidden flex-shrink-0">
+                                          <div className="relative h-20 w-20 rounded-[0.125rem] overflow-hidden flex-shrink-0">
                                             <Image src={item.image || "/placeholder.svg"} alt={item.name} fill className="object-cover" sizes="80" />
                                           </div>
                                         ) : (
-                                          <div className="h-20 w-20 rounded-md bg-qqcream/20 text-qqbrown flex items-center justify-center flex-shrink-0">
-                                            <span className="text-sm">بدون عکس</span>
+                                          <div className="h-20 w-20 rounded-[0.125rem] bg-amber-100 text-teal-600 flex items-center justify-center flex-shrink-0">
+                                            <span className="text-sm font-semibold">بدون عکس</span>
                                           </div>
                                         )}
                                         <AvailabilityToggle 
@@ -632,14 +634,14 @@ export default function MenuItemManager({ isAdmin = true }) {
                                       </div>
                                       <div className="flex flex-col w-full gap-2">
                                         <div className="flex flex-row-reverse justify-between">
-                                          <div className="flex flex-row-reverse gap-1 items-center text-qqdarkbrown">
-                                            <h3 className="font-medium">{item.name}</h3>
+                                          <div className="flex flex-row-reverse gap-1 items-center text-teal-700">
+                                            <p className="font-semibold">{item.name}</p>
                                           </div>
-                                          {item.price && item.price.length === 1 && <h3 className="text-base font-semibold text-qqdarkbrown">{formatCurrency(item.price[0])}</h3>}
-                                          {item.price && item.price.length === 2 && <h3 className="text-base font-semibold text-qqdarkbrown">{formatCurrency(item.price[1])}/{formatCurrency(item.price[0])}</h3>}
+                                          {item.price && item.price.length === 1 && <p className="text-base font-semibold text-teal-700">{formatCurrency(item.price[0])}</p>}
+                                          {item.price && item.price.length === 2 && <p className="text-base font-semibold text-teal-700">{formatCurrency(item.price[1])}/{formatCurrency(item.price[0])}</p>}
                                         </div>
                                         {item.ingredients && (
-                                          <span className="text-sm text-brown">{item.ingredients}</span>
+                                          <span className="text-sm text-teal-600">{item.ingredients}</span>
                                         )}
                                           <div className="flex flex-row-reverse justify-end gap-2">
                                             {isAdmin && (
@@ -647,7 +649,7 @@ export default function MenuItemManager({ isAdmin = true }) {
                                                 <Button 
                                                   variant="outline" 
                                                   size="sm" 
-                                                  className="bg-background hover:bg-white"
+                                                  className="text-teal-700 hover:bg-teal-700 hover:text-amber-50"
                                                   onClick={() => handleEditClick(item)}>
                                                   <Edit className="w-4 h-4" />
                                                   <span className="sr-only">ویرایش</span>
@@ -655,8 +657,8 @@ export default function MenuItemManager({ isAdmin = true }) {
                                                 <Button 
                                                   variant="outline" 
                                                   size="sm" 
-                                                  className="group bg-background hover:bg-red-500" onClick={() => handleDeleteClick(item._id, item.name)}>
-                                                  <Trash2 className="w-4 h-4 text-red-500 group-hover:text-red-50" />
+                                                  className="group border-amber-500 hover:bg-amber-500 hover:border-amber-500" onClick={() => handleDeleteClick(item._id, item.name)}>
+                                                  <Trash2 className="w-4 h-4 text-amber-500 group-hover:text-amber-50" />
                                                   <span className="sr-only">حذف</span>
                                                 </Button>
                                               </>
