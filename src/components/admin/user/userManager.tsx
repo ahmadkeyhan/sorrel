@@ -11,7 +11,7 @@ import { useToast } from "@/components/ui/toastContext"
 import { getUsers, createUser, updateUser, deleteUser } from "@/lib/data/userData"
 
 type User = {
-  id: string
+  _id: string
   name: string
   // email: string
   password: string,
@@ -85,7 +85,7 @@ export default function UserManager() {
   }
 
   const handleEditClick = (user: User) => {
-    setEditingId(user.id)
+    setEditingId(user._id)
     setEditForm({
       name: user.name,
       // email: user.email,
@@ -185,8 +185,8 @@ export default function UserManager() {
           </div>
         ) : (
           users.filter((user) => user.role === "employee").map((user) =>
-            editingId === user.id ? (
-              <Card key={user.id} className="overflow-hidden mb-3">
+            editingId === user._id ? (
+              <Card key={user._id} className="overflow-hidden mb-3">
                 <CardContent className="p-0">
                   <form onSubmit={handleUpdateSubmit} className="p-4 space-y-4">
                     <div dir="rtl" className="grid gap-4 sm:grid-cols-2">
@@ -221,7 +221,7 @@ export default function UserManager() {
                 </CardContent>
               </Card>
             ) : (
-              <Card key={user.id} className="overflow-hidden mb-3">
+              <Card key={user._id} className="overflow-hidden mb-3">
                 <CardContent className="p-0">
                   <div className="pl-2 p-3 flex flex-row-reverse justify-between items-center text-teal-700">
                     <div>
@@ -240,7 +240,7 @@ export default function UserManager() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => handleDeleteClick(user.id, user.name)}
+                        onClick={() => handleDeleteClick(user._id, user.name)}
                         className="group border-amber-500 hover:bg-amber-500 hover:border-amber-500"
                       >
                         <Trash2 className="w-4 h-4 text-amber-500 group-hover:text-amber-50" />
