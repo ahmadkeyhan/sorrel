@@ -1,12 +1,10 @@
 import { NextResponse } from "next/server"
 import cloudinary from "@/lib/cloudinary-server"
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/app/utils/authOtions"
+import { auth } from "@/auth"
 
 export async function POST(request: Request) {
   try {
-    // Check authentication
-    const session = await getServerSession(authOptions)
+    const session = await auth()
     if (!session || session.user.role !== "admin") {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 })
     }
@@ -43,4 +41,3 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, message: error.message || "Failed to upload image" }, { status: 500 })
   }
 }
-

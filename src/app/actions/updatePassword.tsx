@@ -1,14 +1,12 @@
 "use server"
 
-import { getServerSession } from "next-auth/next"
-import { authOptions } from "@/app/utils/authOtions"
+import { auth } from "@/auth"
 import connectToDatabase from "@/lib/mongodb"
 import { User } from "@/models/User"
 
 export async function updatePassword(currentPassword: string, newPassword: string) {
   try {
-    // Get the current user session
-    const session = await getServerSession(authOptions)
+    const session = await auth()
 
     if (!session || !session.user.id) {
       return { success: false, message: "You must be logged in to change your password" }
@@ -40,4 +38,3 @@ export async function updatePassword(currentPassword: string, newPassword: strin
     return { success: false, message: error.message || "Failed to update password" }
   }
 }
-

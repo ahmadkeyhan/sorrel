@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs"
 export interface IUser {
   _id?: string
   name: string
-//   email: string
+  //   email: string
   password: string
   role: "admin" | "employee"
   createdAt?: Date
@@ -36,7 +36,7 @@ const userSchema = new Schema<IUser>(
     },
   },
   {
-    timestamps: true
+    timestamps: true,
   },
 )
 
@@ -63,5 +63,4 @@ userSchema.methods.comparePassword = async function (candidatePassword: string):
   }
 }
 
-export const User = models.User || model<IUser>("User", userSchema)
-
+export const User = models?.User || model<IUser>("User", userSchema)

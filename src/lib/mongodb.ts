@@ -16,14 +16,14 @@ interface MongooseCache {
 
 // Declare the global namespace extension
 declare global {
-  var mongoose: MongooseCache | undefined
+  var myMongoose: MongooseCache | undefined
 }
 
 // Initialize the cache
-let cached = global.mongoose
+let cached = globalThis.myMongoose
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null }
+  cached = globalThis.myMongoose = { conn: null, promise: null }
 }
 
 async function connectToDatabase() {
@@ -52,4 +52,3 @@ async function connectToDatabase() {
 }
 
 export default connectToDatabase
-
