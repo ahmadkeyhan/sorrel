@@ -52,7 +52,7 @@ export default function MenuItemModal({ item, group, categoryName, isOpen, onClo
               transition={{ duration: 0.3 }}
               className="flex flex-col"
             >
-              <div className="relative w-full h-[200px] sm:h-[250px]">
+              <div className="relative w-full aspect-square">
                 <Image
                   src={item.image || "/placeholder.svg?height=250&width=500"}
                   alt={item.name}
