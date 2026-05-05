@@ -13,7 +13,7 @@ async function seedAdminUser() {
       const adminUser = new User({
         name: "admin",
       //   email: "admin@example.com",
-        password: "adminqq", // This will be hashed by the pre-save hook
+        password: "soreladmin", // This will be hashed by the pre-save hook
         role: "admin",
       })
 
@@ -31,7 +31,7 @@ async function seedAdminUser() {
       const employeeUser = new User({
         name: "waiter",
         // email: "employee@example.com",
-        password: "waiter123", // This will be hashed by the pre-save hook
+        password: "sorelwaiter", // This will be hashed by the pre-save hook
         role: "employee",
       })
 

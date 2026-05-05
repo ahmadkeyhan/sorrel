@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server"
 import cloudinary from "@/lib/cloudinary-server"
-import { auth } from "@/auth"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/app/utils/authOptions"
 
 export async function POST(request: Request) {
   try {
-    const session = await auth()
-    if (!session || session.user.role !== "admin") {
+    // Check authentication
+    const session = await getServerSession(authOptions)
+    if (!session || !['admin', 'supervisor'].includes(session.user.role)) {
       return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 })
     }
 
@@ -32,3 +34,4 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: false, message: error.message || "Failed to delete image" }, { status: 500 })
   }
 }
+

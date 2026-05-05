@@ -1,12 +1,13 @@
 "use server"
 
-import { auth } from "@/auth"
+import { authOptions } from "@/app/utils/authOptions"
 import connectToDatabase from "@/lib/mongodb"
 import { User } from "@/models/User"
+import { getServerSession } from "next-auth"
 
 export async function updatePassword(currentPassword: string, newPassword: string) {
   try {
-    const session = await auth()
+    const session = await getServerSession(authOptions)
 
     if (!session || !session.user.id) {
       return { success: false, message: "You must be logged in to change your password" }

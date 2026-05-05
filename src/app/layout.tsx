@@ -1,7 +1,6 @@
 import type React from "react"
 import type { Viewport } from 'next'
 import type { Metadata } from "next"
-import { Vazirmatn, Markazi_Text } from "next/font/google"
 import localFont from 'next/font/local'
 import "./globals.css"
 import { ToastProvider } from "@/components/ui/toastContext"
@@ -10,16 +9,10 @@ import { Navbar } from "@/components/ui/navbar"
 import Footer from "@/components/ui/footer"
 import RouteDialog from "@/components/routeDialog"
 
-const vazir = Vazirmatn({
-  subsets: ['arabic'],
-  variable: '--font-vazir',
-  display: 'swap'
-})
-
-const markazi = Markazi_Text({
-  subsets: ['arabic'],
+const markazi = localFont({
+  src: './fonts/Markazi.ttf',
   variable: '--font-markazi',
-  display: 'swap'
+  display: 'swap',
 })
 
 const doran = localFont({

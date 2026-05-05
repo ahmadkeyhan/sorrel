@@ -80,7 +80,9 @@ export default function MenuItemModal({ item, group, categoryName, isOpen, onClo
                       </DialogTitle>        
                       {item.price && item.price!.length === 1 ? 
                         <p className="font-bold">{formatCurrency(item.price![0])}</p> :
-                        <p className="font-bold">{formatCurrency(item.price![0])} / {formatCurrency(item.price![1])}</p>
+                        item.price && item.price!.length === 2 ? 
+                        <p className="font-bold">{formatCurrency(item.price![0])} / {formatCurrency(item.price![1])}</p> :
+                        null
                       }
                     </div>
                   </div>

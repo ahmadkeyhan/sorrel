@@ -184,7 +184,7 @@ export default function MenuCategories({categories, group} : {categories: catego
                 ) : (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <AnimatePresence>
-                      {category.name === "نیمرو" && <p className="font-bold text-left">تک‌نفره / دو نفره</p>}
+                      {category.name === "املت" && <p className="font-bold text-left">تک‌نفره / دو نفره</p>}
                       {items.map((item, index) => (
                         <motion.div
                           key={item._id}

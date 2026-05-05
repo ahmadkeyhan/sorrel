@@ -68,7 +68,9 @@ export default function MenuItemCard({
           </div>
           {item.price && item.price!.length === 1 ? 
             <p>{formatCurrency(item.price![0])}</p> :
-            <p>{formatCurrency(item.price![0])} / {formatCurrency(item.price![1])}</p>
+            item.price && item.price!.length === 2 ? 
+            <p>{formatCurrency(item.price![0])} / {formatCurrency(item.price![1])}</p> :
+            null
           }
         </div>
         {/* Show price list items */}
